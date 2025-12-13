@@ -60,6 +60,8 @@ inline int normalized_radius(int opening_size)
   return std::max(1, radius);
 }
 
+__global__ void init_rng_states(ImageView<curandState> states, unsigned long long seed);
+
 void ensure_device_buffers(ImageView<rgb8> in)
 {
   if (g_device.mask.width != in.width || g_device.mask.height != in.height)
