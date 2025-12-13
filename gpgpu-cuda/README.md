@@ -34,5 +34,7 @@ You can also tweak the runtime options to align with the parameters described in
 --bg_number_frame=<frames># number of samples in the background average (default 10)
 ```
 
+A shared library `_stream_engine.so` is produced alongside the CLI; import it from `python-backend/stream_engine.py` to drive every pipeline parameter directly from Python (the module wraps the same arguments documented above).
+
 3.
 Edit your cuda/cpp code in */Compute.*

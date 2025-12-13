@@ -10,7 +10,6 @@ import argparse
 import itertools
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -59,7 +58,7 @@ def main():
     parser = argparse.ArgumentParser(description="Grid search runner for stream")
     parser.add_argument("--gpgpu-dir", type=Path, default=Path("../gpgpu-cuda"),
                         help="Path to the gpgpu-cuda project (contains build/stream)")
-    parser.add_argument("--video", type=Path, default=Path("../gpgpu-cuda/samples/ACET.mp4"),
+    parser.add_argument("--video", type=Path, default=Path("gpgpu-cuda/samples/ACET.mp4"),
                         help="Input video that stream will process")
     parser.add_argument("--modes", type=str, default="cpu",
                         help="Comma-separated list of modes to test (cpu,gpu)")
@@ -73,10 +72,12 @@ def main():
                         help="Only print the generated commands without executing anything")
     parser.add_argument("--grid", action="append", default=[], type=parse_grid_override,
                         help="Override a grid dimension (ex: --grid opening_size=5,7)")
+    parser.add_argument("--use-lib", action="store_true",
+                        help="Invoke the shared python library instead of the CLI executable")
     args = parser.parse_args()
 
     stream_exe = args.gpgpu_dir / "build" / "stream"
-    if not stream_exe.exists():
+    if not args.use_lib and not stream_exe.exists():
         parser.error(f"Executable not found: {stream_exe}")
 
     video_path = args.video
@@ -90,6 +91,15 @@ def main():
     output_dir = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
     results_path = output_dir / "grid_results.json"
+
+    if args.use_lib:
+        try:
+            import stream_engine
+        except Exception as exc:  # pylint: disable=broad-except
+            parser.error(f"Unable to import stream_engine module: {exc}")
+        run_stream_lib = stream_engine.run_stream
+    else:
+        run_stream_lib = None
 
     records = []
     for idx, combo in enumerate(combos):
@@ -112,14 +122,30 @@ def main():
                 continue
 
             start = time.time()
-            result = subprocess.run(cmd, cwd=args.gpgpu_dir, capture_output=True, text=True)
-            duration = time.time() - start
+            if run_stream_lib:
+                rc = run_stream_lib(
+                    mode,
+                    str(video_path),
+                    output=str(output_path) if output_path else None,
+                    background=str(args.bg) if args.bg else None,
+                    opening_size=params["opening_size"],
+                    th_low=params["th_low"],
+                    th_high=params["th_high"],
+                    bg_sampling_rate=params["bg_sampling_rate"],
+                    bg_number_frame=params["bg_number_frame"],
+                )
+                duration = time.time() - start
+                result = None
+            else:
+                result = subprocess.run(cmd, cwd=args.gpgpu_dir, capture_output=True, text=True)
+                duration = time.time() - start
+                rc = result.returncode
 
             record.update({
-                "returncode": result.returncode,
+                "returncode": rc,
                 "duration": duration,
-                "stdout": result.stdout.strip(),
-                "stderr": result.stderr.strip(),
+                "stdout": result.stdout.strip() if result else "",
+                "stderr": result.stderr.strip() if result else "",
                 "output": str(output_path) if output_path else None,
             })
             records.append(record)
@@ -127,9 +153,10 @@ def main():
             if not args.keep_output and output_path and output_path.exists():
                 output_path.unlink()
 
-            if result.returncode != 0:
+            if rc != 0:
                 print(f"Command failed: {' '.join(cmd)}", file=sys.stderr)
-                print(result.stderr, file=sys.stderr)
+                if result:
+                    print(result.stderr, file=sys.stderr)
                 break
 
     if records and not args.dry_run:

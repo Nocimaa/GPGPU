@@ -16,16 +16,32 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall")
 
 
 add_library(stb_image src/stb_image.h src/stb_image.c)
+set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
 add_library(Compute src/Compute.cpp src/Compute.cu src/logo.c)
+set_target_properties(Compute PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(Compute PRIVATE CUDA::cudart stb_image)
 
-add_executable(stream src/stream.cpp src/gstfilter.c src/gstfilter.h)
+add_library(stream_engine SHARED
+  src/StreamRunner.cpp
+  src/gstfilter.c
+  src/gstfilter.h)
+target_link_libraries(stream_engine PRIVATE Compute PkgConfig::GStreamerVideo CUDA::cudart)
+set_target_properties(stream_engine PROPERTIES
+  OUTPUT_NAME "_stream_engine"
+  PREFIX ""
+  SUFFIX ".so")
+add_custom_command(TARGET stream_engine POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:stream_engine>
+    "${CMAKE_SOURCE_DIR}/../python-backend/_stream_engine.so")
 
-
-target_link_libraries(stream PUBLIC PkgConfig::GStreamerVideo CUDA::cudart)
+# Create lightweight executable that calls into stream_engine
+add_executable(stream src/stream.cpp)
+target_link_libraries(stream PUBLIC stream_engine)
+target_link_libraries(stream PUBLIC PkgConfig::GStreamerVideo)
 
 ## La beauté de NIX....
-target_link_libraries(stream PUBLIC Compute)
+target_link_libraries(stream PUBLIC CUDA::cudart)
 target_link_directories(stream PUBLIC "${CUDAToolkit_LIBRARY_DIR}")
 set_target_properties(stream PROPERTIES
   INSTALL_RPATH "${CUDAToolkit_LIBRARY_DIR}"
