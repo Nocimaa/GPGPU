@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <cuda_runtime.h>
 
 #define CUDA_CHECK(cmd)                                                     \
@@ -30,6 +31,9 @@ struct DeviceState
   Image<uint8_t> mask;
   Image<uint8_t> temp;
   Image<uint8_t> prev_mask;
+  Image<uint8_t> clean_prev;
+  Image<uint8_t> host_mask;
+  Image<unsigned int> change_flag;
   size_t frame_count = 0;
   bool manual_background = false;
   bool background_initialized = false;
@@ -58,6 +62,9 @@ void ensure_device_buffers(ImageView<rgb8> in)
     g_device.mask = Image<uint8_t>(in.width, in.height, true);
     g_device.temp = Image<uint8_t>(in.width, in.height, true);
     g_device.prev_mask = Image<uint8_t>(in.width, in.height, true);
+    g_device.clean_prev = Image<uint8_t>(in.width, in.height, true);
+    g_device.host_mask = Image<uint8_t>(in.width, in.height);
+    g_device.change_flag = Image<unsigned int>(1, 1, true);
     g_device.frame_count = 0;
     g_device.manual_background = false;
     g_device.background_initialized = false;
@@ -65,6 +72,9 @@ void ensure_device_buffers(ImageView<rgb8> in)
     CUDA_CHECK(cudaMemset(g_device.mask.buffer, 0, g_device.mask.stride * g_device.mask.height));
     CUDA_CHECK(cudaMemset(g_device.prev_mask.buffer, 0, g_device.prev_mask.stride * g_device.prev_mask.height));
     CUDA_CHECK(cudaMemset(g_device.temp.buffer, 0, g_device.temp.stride * g_device.temp.height));
+    CUDA_CHECK(cudaMemset(g_device.clean_prev.buffer, 0, g_device.clean_prev.stride * g_device.clean_prev.height));
+    CUDA_CHECK(cudaMemset(g_device.change_flag.buffer, 0, g_device.change_flag.stride * g_device.change_flag.height));
+    std::memset(g_device.host_mask.buffer, 0, g_device.host_mask.stride * g_device.host_mask.height);
   }
 }
 
@@ -215,26 +225,45 @@ __global__ void morph(ImageView<uint8_t> src, ImageView<uint8_t> dst, int radius
   dst_line[x] = value;
 }
 
-__global__ void apply_mask(ImageView<rgb8> frame, ImageView<uint8_t> mask)
+__device__ inline unsigned int* change_flag_cell(const ImageView<unsigned int>& view)
+{
+  return reinterpret_cast<unsigned int*>((uint8_t*)view.buffer);
+}
+
+__global__ void detect_mask_changes(ImageView<uint8_t> mask, ImageView<uint8_t> prev, ImageView<unsigned int> flag)
 {
   int x = blockIdx.x * blockDim.x + threadIdx.x;
   int y = blockIdx.y * blockDim.y + threadIdx.y;
-  if (x >= frame.width || y >= frame.height)
+  if (x >= mask.width || y >= mask.height)
     return;
 
-  auto row = reinterpret_cast<rgb8*>((uint8_t*)frame.buffer + y * frame.stride);
   auto mask_line = mask_row(mask, y);
-  if (mask_line[x] > 0)
-  {
-    row[x].r = 255;
-    row[x].g = 0;
-    row[x].b = 0;
-  }
+  auto prev_line = mask_row(prev, y);
+  if (mask_line[x] != prev_line[x])
+    atomicOr(change_flag_cell(flag), 1u);
 }
 
 void copy_mask_gpu(ImageView<uint8_t> src, ImageView<uint8_t> dst)
 {
   CUDA_CHECK(cudaMemcpy2D(dst.buffer, dst.stride, src.buffer, src.stride, src.width, src.height, cudaMemcpyDeviceToDevice));
+}
+
+void apply_mask_host(ImageView<rgb8> image, ImageView<uint8_t> mask)
+{
+  for (int y = 0; y < image.height; ++y)
+  {
+    auto line = (rgb8*)((uint8_t*)image.buffer + y * image.stride);
+    auto mask_line = (uint8_t*)((uint8_t*)mask.buffer + y * mask.stride);
+    for (int x = 0; x < image.width; ++x)
+    {
+      if (mask_line[x] > 0)
+      {
+        line[x].r = 255;
+        line[x].g = 0;
+        line[x].b = 0;
+      }
+    }
+  }
 }
 
 } // namespace
@@ -273,22 +302,41 @@ void compute_cu(ImageView<rgb8> in)
   build_mask<<<grid, block>>>(frame_view, background_view, mask_view, prev_view, th_low, th_high, g_device.frame_count > 0);
   CUDA_KERNEL_CHECK();
 
-  morph<<<grid, block>>>(mask_view, temp_view, radius, false);
-  CUDA_KERNEL_CHECK();
-  morph<<<grid, block>>>(temp_view, mask_view, radius, true);
-  CUDA_KERNEL_CHECK();
-  morph<<<grid, block>>>(mask_view, temp_view, radius, true);
-  CUDA_KERNEL_CHECK();
-  morph<<<grid, block>>>(temp_view, mask_view, radius, false);
-  CUDA_KERNEL_CHECK();
+  ImageView<uint8_t> clean_prev_view{g_device.clean_prev.buffer, in.width, in.height, g_device.clean_prev.stride};
+  copy_mask_gpu(mask_view, clean_prev_view);
+  ImageView<unsigned int> change_flag_view{g_device.change_flag.buffer, 1, 1, g_device.change_flag.stride};
+  constexpr int kMaxMaskCleaningIterations = 16;
+  int cleaning_iteration = 0;
+  bool mask_changed;
+  do
+  {
+    morph<<<grid, block>>>(mask_view, temp_view, radius, false);
+    CUDA_KERNEL_CHECK();
+    morph<<<grid, block>>>(temp_view, mask_view, radius, true);
+    CUDA_KERNEL_CHECK();
+    morph<<<grid, block>>>(mask_view, temp_view, radius, true);
+    CUDA_KERNEL_CHECK();
+    morph<<<grid, block>>>(temp_view, mask_view, radius, false);
+    CUDA_KERNEL_CHECK();
+
+    CUDA_CHECK(cudaMemset(change_flag_view.buffer, 0, change_flag_view.stride * change_flag_view.height));
+    detect_mask_changes<<<grid, block>>>(mask_view, clean_prev_view, change_flag_view);
+    CUDA_KERNEL_CHECK();
+
+    unsigned int flag_host = 0;
+    CUDA_CHECK(cudaMemcpy(&flag_host, change_flag_view.buffer, sizeof(flag_host), cudaMemcpyDeviceToHost));
+    mask_changed = flag_host != 0;
+    copy_mask_gpu(mask_view, clean_prev_view);
+    cleaning_iteration++;
+  } while (mask_changed && cleaning_iteration < kMaxMaskCleaningIterations);
 
   copy_mask_gpu(mask_view, prev_view);
 
-  apply_mask<<<grid, block>>>(frame_view, mask_view);
-  CUDA_KERNEL_CHECK();
-
-  CUDA_CHECK(cudaMemcpy2D(in.buffer, in.stride, device_frame.buffer, device_frame.stride,
-                           in.width * sizeof(rgb8), in.height, cudaMemcpyDeviceToHost));
+  ImageView<uint8_t> host_mask_view{g_device.host_mask.buffer, in.width, in.height, g_device.host_mask.stride};
+  CUDA_CHECK(cudaMemcpy2D(host_mask_view.buffer, host_mask_view.stride,
+                           mask_view.buffer, mask_view.stride,
+                           in.width, in.height, cudaMemcpyDeviceToHost));
+  apply_mask_host(in, host_mask_view);
 
   g_device.frame_count++;
 }
