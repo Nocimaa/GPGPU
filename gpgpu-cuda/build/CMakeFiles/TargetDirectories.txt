@@ -1,0 +1,5 @@
+/home/ubuntu/GPGPU/gpgpu-cuda/build/CMakeFiles/stb_image.dir
+/home/ubuntu/GPGPU/gpgpu-cuda/build/CMakeFiles/Compute.dir
+/home/ubuntu/GPGPU/gpgpu-cuda/build/CMakeFiles/stream.dir
+/home/ubuntu/GPGPU/gpgpu-cuda/build/CMakeFiles/edit_cache.dir
+/home/ubuntu/GPGPU/gpgpu-cuda/build/CMakeFiles/rebuild_cache.dir
