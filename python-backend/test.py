@@ -120,8 +120,8 @@ def main():
                 print(record["command"])
                 records.append(record)
                 continue
-
             start = time.time()
+            print(f"Running {idx + 1}/{len(combos)}: mode={mode} params={params}")
             if run_stream_lib:
                 rc = run_stream_lib(
                     mode,
@@ -149,7 +149,7 @@ def main():
                 "output": str(output_path) if output_path else None,
             })
             records.append(record)
-
+            print(f"Completed {idx + 1}/{len(combos)} mode={mode} params={params} rc={rc} duration={duration:.2f}s")
             if not args.keep_output and output_path and output_path.exists():
                 output_path.unlink()
 
