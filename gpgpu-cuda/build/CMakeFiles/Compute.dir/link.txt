@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCompute.a CMakeFiles/Compute.dir/src/Compute.cpp.o CMakeFiles/Compute.dir/src/Compute.cu.o CMakeFiles/Compute.dir/src/logo.c.o
-/usr/bin/ranlib libCompute.a
