@@ -4,11 +4,13 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cfloat>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <curand_kernel.h>
 #include <cuda_runtime.h>
 
 #define CUDA_CHECK(cmd)                                                     \
@@ -25,14 +27,18 @@
 
 namespace {
 
+constexpr int kReservoirSize = 4;
+
 struct DeviceState
 {
-  Image<float> background;
   Image<uint8_t> mask;
   Image<uint8_t> temp;
   Image<uint8_t> prev_mask;
   Image<uint8_t> clean_prev;
   Image<uint8_t> host_mask;
+  Image<float> reservoir_values;
+  Image<float> reservoir_weights;
+  Image<curandState> rng_states;
   Image<unsigned int> change_flag;
   size_t frame_count = 0;
   bool manual_background = false;
@@ -56,14 +62,17 @@ inline int normalized_radius(int opening_size)
 
 void ensure_device_buffers(ImageView<rgb8> in)
 {
-  if (g_device.background.width != in.width || g_device.background.height != in.height)
+  if (g_device.mask.width != in.width || g_device.mask.height != in.height)
   {
-    g_device.background = Image<float>(in.width, in.height, true);
+    int reservoir_width = in.width * kReservoirSize;
     g_device.mask = Image<uint8_t>(in.width, in.height, true);
     g_device.temp = Image<uint8_t>(in.width, in.height, true);
     g_device.prev_mask = Image<uint8_t>(in.width, in.height, true);
     g_device.clean_prev = Image<uint8_t>(in.width, in.height, true);
     g_device.host_mask = Image<uint8_t>(in.width, in.height);
+    g_device.reservoir_values = Image<float>(reservoir_width, in.height, true);
+    g_device.reservoir_weights = Image<float>(reservoir_width, in.height, true);
+    g_device.rng_states = Image<curandState>(in.width, in.height, true);
     g_device.change_flag = Image<unsigned int>(1, 1, true);
     g_device.frame_count = 0;
     g_device.manual_background = false;
@@ -73,8 +82,17 @@ void ensure_device_buffers(ImageView<rgb8> in)
     CUDA_CHECK(cudaMemset(g_device.prev_mask.buffer, 0, g_device.prev_mask.stride * g_device.prev_mask.height));
     CUDA_CHECK(cudaMemset(g_device.temp.buffer, 0, g_device.temp.stride * g_device.temp.height));
     CUDA_CHECK(cudaMemset(g_device.clean_prev.buffer, 0, g_device.clean_prev.stride * g_device.clean_prev.height));
+    CUDA_CHECK(cudaMemset(g_device.reservoir_values.buffer, 0, g_device.reservoir_values.stride * g_device.reservoir_values.height));
+    CUDA_CHECK(cudaMemset(g_device.reservoir_weights.buffer, 0, g_device.reservoir_weights.stride * g_device.reservoir_weights.height));
     CUDA_CHECK(cudaMemset(g_device.change_flag.buffer, 0, g_device.change_flag.stride * g_device.change_flag.height));
     std::memset(g_device.host_mask.buffer, 0, g_device.host_mask.stride * g_device.host_mask.height);
+
+    dim3 block(16, 16);
+    dim3 grid((in.width + block.x - 1) / block.x, (in.height + block.y - 1) / block.y);
+    ImageView<curandState> rng_view{g_device.rng_states.buffer, in.width, in.height, g_device.rng_states.stride};
+    unsigned long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    init_rng_states<<<grid, block>>>(rng_view, seed);
+    CUDA_KERNEL_CHECK();
   }
 }
 
@@ -117,19 +135,38 @@ void load_manual_background(ImageView<rgb8> in)
   if (!bg_image.buffer || bg_image.width != in.width || bg_image.height != in.height)
     return;
 
-  Image<float> host_background(in.width, in.height);
+  int reservoir_width = in.width * kReservoirSize;
+  Image<float> host_reservoir(reservoir_width, in.height);
+  Image<float> host_weights(reservoir_width, in.height);
+
   for (int y = 0; y < in.height; ++y)
   {
     auto src_line = (rgb8*)((std::byte*)bg_image.buffer + y * bg_image.stride);
-    auto dst_line = (float*)((std::byte*)host_background.buffer + y * host_background.stride);
+    auto reservoir_line = (float*)((std::byte*)host_reservoir.buffer + y * host_reservoir.stride);
+    auto weight_line = (float*)((std::byte*)host_weights.buffer + y * host_weights.stride);
     for (int x = 0; x < in.width; ++x)
-      dst_line[x] = src_line[x].r * 0.299f + src_line[x].g * 0.587f + src_line[x].b * 0.114f;
+    {
+      float lum = src_line[x].r * 0.299f + src_line[x].g * 0.587f + src_line[x].b * 0.114f;
+      for (int k = 0; k < kReservoirSize; ++k)
+      {
+        reservoir_line[x * kReservoirSize + k] = lum;
+        weight_line[x * kReservoirSize + k] = 1.f;
+      }
+    }
   }
 
-  CUDA_CHECK(cudaMemcpy2D(g_device.background.buffer, g_device.background.stride,
-                           host_background.buffer, host_background.stride,
-                           in.width * sizeof(float), in.height,
+  ImageView<float> reservoir_view{g_device.reservoir_values.buffer, reservoir_width, in.height, g_device.reservoir_values.stride};
+  ImageView<float> weight_view{g_device.reservoir_weights.buffer, reservoir_width, in.height, g_device.reservoir_weights.stride};
+
+  CUDA_CHECK(cudaMemcpy2D(reservoir_view.buffer, reservoir_view.stride,
+                           host_reservoir.buffer, host_reservoir.stride,
+                           reservoir_width * sizeof(float), in.height,
                            cudaMemcpyHostToDevice));
+  CUDA_CHECK(cudaMemcpy2D(weight_view.buffer, weight_view.stride,
+                           host_weights.buffer, host_weights.stride,
+                           reservoir_width * sizeof(float), in.height,
+                           cudaMemcpyHostToDevice));
+
   g_device.manual_background = true;
   g_device.background_initialized = true;
   g_device.last_bg_update = std::chrono::steady_clock::now();
@@ -140,7 +177,7 @@ __device__ inline float luminance(const rgb8& px)
   return px.r * 0.299f + px.g * 0.587f + px.b * 0.114f;
 }
 
-__device__ inline float* background_row(const ImageView<float>& view, int y)
+__device__ inline float* reservoir_row(const ImageView<float>& view, int y)
 {
   return reinterpret_cast<float*>((uint8_t*)view.buffer + y * view.stride);
 }
@@ -150,24 +187,99 @@ __device__ inline uint8_t* mask_row(const ImageView<uint8_t>& view, int y)
   return reinterpret_cast<uint8_t*>((uint8_t*)view.buffer + y * view.stride);
 }
 
-__global__ void update_background(ImageView<rgb8> frame, ImageView<float> background, float alpha, bool initialize)
+__device__ inline curandState* rng_row(const ImageView<curandState>& view, int y)
 {
-  int x = blockIdx.x * blockDim.x + threadIdx.x;
-  int y = blockIdx.y * blockDim.y + threadIdx.y;
-  if (x >= frame.width || y >= frame.height)
-    return;
-
-  auto row = reinterpret_cast<rgb8*>((uint8_t*)frame.buffer + y * frame.stride);
-  auto bg_row = background_row(background, y);
-
-  float lum = luminance(row[x]);
-  if (initialize)
-    bg_row[x] = lum;
-  else
-    bg_row[x] = bg_row[x] * (1.f - alpha) + lum * alpha;
+  return reinterpret_cast<curandState*>((uint8_t*)view.buffer + y * view.stride);
 }
 
-__global__ void build_mask(ImageView<rgb8> frame, ImageView<float> background, ImageView<uint8_t> mask, ImageView<uint8_t> prev_mask, int th_low, int th_high, bool has_prev)
+__global__ void init_rng_states(ImageView<curandState> states, unsigned long long seed)
+{
+  int x = blockIdx.x * blockDim.x + threadIdx.x;
+  int y = blockIdx.y * blockDim.y + threadIdx.y;
+  if (x >= states.width || y >= states.height)
+    return;
+
+  int idx = y * states.width + x;
+  curandState* row = rng_row(states, y);
+  curand_init(seed, idx, 0, &row[x]);
+}
+
+__global__ void update_reservoir_background(ImageView<rgb8> frame,
+                                             ImageView<float> reservoir,
+                                             ImageView<float> weights,
+                                             ImageView<curandState> rng,
+                                             int reservoir_size,
+                                             float match_radius,
+                                             bool initialize)
+{
+  int x = blockIdx.x * blockDim.x + threadIdx.x;
+  int y = blockIdx.y * blockDim.y + threadIdx.y;
+  if (x >= frame.width || y >= frame.height)
+    return;
+
+  auto frame_row = reinterpret_cast<rgb8*>((uint8_t*)frame.buffer + y * frame.stride);
+  float lum = luminance(frame_row[x]);
+  float* reservoir_row_ptr = reservoir_row(reservoir, y);
+  float* weight_row_ptr = reservoir_row(weights, y);
+  curandState* rng_row_ptr = rng_row(rng, y);
+  curandState* state = &rng_row_ptr[x];
+  int base = x * reservoir_size;
+
+  if (initialize)
+  {
+    for (int i = 0; i < reservoir_size; ++i)
+    {
+      reservoir_row_ptr[base + i] = lum;
+      weight_row_ptr[base + i] = 1.f;
+    }
+    return;
+  }
+
+  float total_weight = 0.f;
+  int match_idx = -1;
+  for (int i = 0; i < reservoir_size; ++i)
+  {
+    float value = reservoir_row_ptr[base + i];
+    float diff = fabsf(lum - value);
+    total_weight += weight_row_ptr[base + i];
+    if (diff <= match_radius)
+      match_idx = i;
+  }
+
+  if (match_idx >= 0)
+  {
+    float* entry = &reservoir_row_ptr[base + match_idx];
+    float* weight = &weight_row_ptr[base + match_idx];
+    *entry = *entry * 0.85f + lum * 0.15f;
+    *weight = fminf(*weight + 1.f, 255.f);
+    return;
+  }
+
+  int target = 0;
+  if (total_weight > 0.f)
+  {
+    float threshold = curand_uniform(state) * total_weight;
+    float accumulated = 0.f;
+    for (int i = 0; i < reservoir_size; ++i)
+    {
+      accumulated += weight_row_ptr[base + i];
+      if (accumulated >= threshold)
+      {
+        target = i;
+        break;
+      }
+    }
+  }
+  else
+  {
+    target = curand(state) % reservoir_size;
+  }
+
+  reservoir_row_ptr[base + target] = lum;
+  weight_row_ptr[base + target] = 1.f;
+}
+
+__global__ void build_mask(ImageView<rgb8> frame, ImageView<float> reservoir, ImageView<uint8_t> mask, ImageView<uint8_t> prev_mask, int th_low, int th_high, bool has_prev, int reservoir_size)
 {
   int x = blockIdx.x * blockDim.x + threadIdx.x;
   int y = blockIdx.y * blockDim.y + threadIdx.y;
@@ -175,11 +287,19 @@ __global__ void build_mask(ImageView<rgb8> frame, ImageView<float> background, I
     return;
 
   auto row = reinterpret_cast<rgb8*>((uint8_t*)frame.buffer + y * frame.stride);
-  auto bg_row = background_row(background, y);
+  float* reservoir_line = reservoir_row(reservoir, y);
   auto mask_line = mask_row(mask, y);
   auto prev_line = mask_row(prev_mask, y);
 
-  float diff = fabsf(luminance(row[x]) - bg_row[x]);
+  float lum = luminance(row[x]);
+  float diff = FLT_MAX;
+  int base = x * reservoir_size;
+  for (int i = 0; i < reservoir_size; ++i)
+  {
+    float value = reservoir_line[base + i];
+    float candidate = fabsf(lum - value);
+    diff = diff < candidate ? diff : candidate;
+  }
   uint8_t prev_value = has_prev ? prev_line[x] : 0;
   if (diff >= th_high)
     mask_line[x] = 255;
@@ -287,7 +407,10 @@ void compute_cu(ImageView<rgb8> in)
   const int th_high = std::max(th_low, g_params.th_high);
   const int radius = normalized_radius(g_params.opening_size);
 
-  ImageView<float> background_view{g_device.background.buffer, in.width, in.height, g_device.background.stride};
+  int reservoir_width = in.width * kReservoirSize;
+  ImageView<float> reservoir_view{g_device.reservoir_values.buffer, reservoir_width, in.height, g_device.reservoir_values.stride};
+  ImageView<float> weight_view{g_device.reservoir_weights.buffer, reservoir_width, in.height, g_device.reservoir_weights.stride};
+  ImageView<curandState> rng_view{g_device.rng_states.buffer, in.width, in.height, g_device.rng_states.stride};
   ImageView<uint8_t> mask_view{g_device.mask.buffer, in.width, in.height, g_device.mask.stride};
   ImageView<uint8_t> temp_view{g_device.temp.buffer, in.width, in.height, g_device.temp.stride};
   ImageView<uint8_t> prev_view{g_device.prev_mask.buffer, in.width, in.height, g_device.prev_mask.stride};
@@ -295,11 +418,14 @@ void compute_cu(ImageView<rgb8> in)
 
   if (update_bg)
   {
-    update_background<<<grid, block>>>(frame_view, background_view, alpha, initialize);
+    float match_radius = std::max(1, g_params.th_low);
+    update_reservoir_background<<<grid, block>>>(frame_view, reservoir_view, weight_view, rng_view,
+                                                 kReservoirSize, match_radius, initialize);
     CUDA_KERNEL_CHECK();
   }
 
-  build_mask<<<grid, block>>>(frame_view, background_view, mask_view, prev_view, th_low, th_high, g_device.frame_count > 0);
+  build_mask<<<grid, block>>>(frame_view, reservoir_view, mask_view, prev_view, th_low, th_high,
+                              g_device.frame_count > 0, kReservoirSize);
   CUDA_KERNEL_CHECK();
 
   ImageView<uint8_t> clean_prev_view{g_device.clean_prev.buffer, in.width, in.height, g_device.clean_prev.stride};
