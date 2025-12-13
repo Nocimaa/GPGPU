@@ -18,11 +18,11 @@ from pathlib import Path
 
 
 DEFAULT_GRID = {
-    "opening_size": [3, 5],
-    "th_low": [3, 6],
-    "th_high": [30, 45],
-    "bg_sampling_rate": [250, 500],
-    "bg_number_frame": [5, 10],
+    "opening_size": [3, 7],
+    "th_low": [2, 5],
+    "th_high": [25, 40, 60],
+    "bg_sampling_rate": [200, 400, 600],
+    "bg_number_frame": [5, 15],
 }
 
 
@@ -52,6 +52,39 @@ def build_command(stream_exe, mode, video_path, params, bg_uri, output_path):
     if output_path:
         cmd.extend(["--output", str(output_path)])
     return cmd
+
+
+def format_params(params):
+    return ", ".join(f"{key}={value}" for key, value in sorted(params.items()))
+
+
+def summarize_records(records, top_n=3):
+    success = [record for record in records if record["returncode"] == 0]
+    failures = [record for record in records if record["returncode"] != 0]
+    if not success and not failures:
+        return
+
+    def sample_summary(record):
+        base = f"{record['mode']} ({format_params(record['params'])})"
+        duration = f"{record['duration']:.2f}s"
+        return f"{base} → rc={record['returncode']} duration={duration}"
+
+    if success:
+        best = sorted(success, key=lambda r: r["duration"])[:top_n]
+        worst = sorted(success, key=lambda r: r["duration"], reverse=True)[:top_n]
+        print("\nFastest successful runs:")
+        for record in best:
+            print("  " + sample_summary(record))
+        print("\nSlowest successful runs:")
+        for record in worst:
+            print("  " + sample_summary(record))
+
+    if failures:
+        print("\nFailed runs:")
+        for record in failures[:top_n]:
+            print("  " + sample_summary(record))
+        if len(failures) > top_n:
+            print(f"  ...and {len(failures) - top_n} more failures")
 
 
 def main():
@@ -163,6 +196,7 @@ def main():
         with results_path.open("w") as f:
             json.dump(records, f, indent=2)
         print(f"Wrote grid results to {results_path}")
+        summarize_records(records)
 
 
 if __name__ == "__main__":
