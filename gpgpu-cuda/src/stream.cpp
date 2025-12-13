@@ -2,6 +2,7 @@
 
 #include <gst/gst.h>
 #include <format>
+#include <string>
 #include "gstfilter.h"
 #include "argh.h"
 
@@ -37,14 +38,27 @@ int main(int argc, char* argv[])
   argh::parser cmdl(argc, argv);
   if (cmdl[{"-h", "--help"}])
   {
-    g_printerr("Usage: %s --mode=[gpu,cpu] <filename> [--output=output.mp4]\n", argv[0]);
+    g_printerr("Usage: %s --mode=[gpu,cpu] <filename> [--output=output.mp4] bg=<path> opening_size=<size> th_low=<int> th_high=<int> bg_sampling_rate=<ms> bg_number_frame=<frames>\n", argv[0]);
     return 0;
+  }
+
+  auto parse_int = [&](const char* key, int def) {
+    int value = def;
+    auto stream = cmdl(key, def);
+    if (!(stream >> value))
+      value = def;
+    return value;
+  };
+
+  const std::string filename = cmdl(1).str();
+  if (filename.empty())
+  {
+    g_printerr("Missing video filename\n");
+    return 1;
   }
 
   Parameters params;
   auto method = cmdl("mode", "cpu").str();
-  auto filename = cmdl(1).str();
-  auto output = cmdl({"-o", "--output"}, "").str();
   if (method == "cpu")
     params.device = e_device_t::CPU;
   else if (method == "gpu")
@@ -54,6 +68,16 @@ int main(int argc, char* argv[])
     g_printerr("Invalid method: %s\n", method.c_str());
     return 1;
   }
+
+  const std::string bg_uri = cmdl("bg", "").str();
+  params.bg_uri = bg_uri.empty() ? nullptr : bg_uri.c_str();
+  params.opening_size = parse_int("opening_size", 3);
+  params.th_low = parse_int("th_low", 3);
+  params.th_high = parse_int("th_high", 30);
+  params.bg_sampling_rate_ms = parse_int("bg_sampling_rate", 500);
+  params.bg_number_frame = parse_int("bg_number_frame", 10);
+
+  const std::string output = cmdl({"-o", "--output"}, "").str();
 
   g_debug("Using method: %s", method.c_str());
   gst_init(&argc, &argv);

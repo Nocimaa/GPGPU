@@ -14,9 +14,17 @@ typedef enum {
 } e_device_t;
 
 
-typedef struct  {    
+typedef struct {
     e_device_t device;
+    const char* bg_uri;
+    int opening_size;
+    int th_low;
+    int th_high;
+    int bg_sampling_rate_ms;
+    int bg_number_frame;
 } Parameters;
+
+extern Parameters g_params;
 
 /// Global state initialization
 /// This function is called once before any other cpt_* function at the beginning of the program
