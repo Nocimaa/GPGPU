@@ -18,11 +18,11 @@ from pathlib import Path
 
 
 DEFAULT_GRID = {
-    "opening_size": [3, 7],
-    "th_low": [2, 5],
-    "th_high": [25, 40, 60],
-    "bg_sampling_rate": [200, 400, 600],
-    "bg_number_frame": [5, 15],
+    "opening_size": [3],
+    "th_low": [5],
+    "th_high": [40],
+    "bg_sampling_rate": [400],
+    "bg_number_frame": [15],
 }
 
 
