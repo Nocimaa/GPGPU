@@ -10,7 +10,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=3 th_high=30 th_low=3 --output outputs/gpu_0_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.083358287811279,
+    "duration": 5.436783790588379,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_0_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high30_th_low3.mp4"
@@ -26,7 +26,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=3 th_high=30 th_low=6 --output outputs/gpu_1_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.1343348026275635,
+    "duration": 4.798338890075684,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_1_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high30_th_low6.mp4"
@@ -42,7 +42,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=3 th_high=45 th_low=3 --output outputs/gpu_2_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.37057638168335,
+    "duration": 4.916309356689453,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_2_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high45_th_low3.mp4"
@@ -58,7 +58,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=3 th_high=45 th_low=6 --output outputs/gpu_3_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.054701328277588,
+    "duration": 5.361256837844849,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_3_bg_number_frame5_bg_sampling_rate250_opening_size3_th_high45_th_low6.mp4"
@@ -74,7 +74,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=5 th_high=30 th_low=3 --output outputs/gpu_4_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.423073053359985,
+    "duration": 5.084198713302612,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_4_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high30_th_low3.mp4"
@@ -90,7 +90,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=5 th_high=30 th_low=6 --output outputs/gpu_5_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.015034198760986,
+    "duration": 5.135144472122192,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_5_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high30_th_low6.mp4"
@@ -106,7 +106,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=5 th_high=45 th_low=3 --output outputs/gpu_6_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.371169567108154,
+    "duration": 5.114711046218872,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_6_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high45_th_low3.mp4"
@@ -122,7 +122,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=250 opening_size=5 th_high=45 th_low=6 --output outputs/gpu_7_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.082670211791992,
+    "duration": 5.278550148010254,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_7_bg_number_frame5_bg_sampling_rate250_opening_size5_th_high45_th_low6.mp4"
@@ -138,7 +138,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=3 th_high=30 th_low=3 --output outputs/gpu_8_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 4.933203458786011,
+    "duration": 5.008305549621582,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_8_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high30_th_low3.mp4"
@@ -154,7 +154,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=3 th_high=30 th_low=6 --output outputs/gpu_9_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.128550291061401,
+    "duration": 4.947407007217407,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_9_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high30_th_low6.mp4"
@@ -170,7 +170,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=3 th_high=45 th_low=3 --output outputs/gpu_10_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.178557872772217,
+    "duration": 4.748465538024902,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_10_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high45_th_low3.mp4"
@@ -186,7 +186,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=3 th_high=45 th_low=6 --output outputs/gpu_11_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.492696523666382,
+    "duration": 4.753537654876709,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_11_bg_number_frame5_bg_sampling_rate500_opening_size3_th_high45_th_low6.mp4"
@@ -202,7 +202,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=5 th_high=30 th_low=3 --output outputs/gpu_12_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.18168568611145,
+    "duration": 4.6610107421875,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_12_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high30_th_low3.mp4"
@@ -218,7 +218,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=5 th_high=30 th_low=6 --output outputs/gpu_13_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.19638991355896,
+    "duration": 5.0930914878845215,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_13_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high30_th_low6.mp4"
@@ -234,7 +234,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=5 th_high=45 th_low=3 --output outputs/gpu_14_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.355867147445679,
+    "duration": 4.986238241195679,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_14_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high45_th_low3.mp4"
@@ -250,7 +250,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=5 bg_sampling_rate=500 opening_size=5 th_high=45 th_low=6 --output outputs/gpu_15_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.317798137664795,
+    "duration": 4.875305652618408,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_15_bg_number_frame5_bg_sampling_rate500_opening_size5_th_high45_th_low6.mp4"
@@ -266,7 +266,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=3 th_high=30 th_low=3 --output outputs/gpu_16_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.07521915435791,
+    "duration": 4.766274690628052,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_16_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high30_th_low3.mp4"
@@ -282,7 +282,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=3 th_high=30 th_low=6 --output outputs/gpu_17_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.080335378646851,
+    "duration": 4.814157485961914,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_17_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high30_th_low6.mp4"
@@ -298,7 +298,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=3 th_high=45 th_low=3 --output outputs/gpu_18_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 4.944514274597168,
+    "duration": 4.96999454498291,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_18_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high45_th_low3.mp4"
@@ -314,7 +314,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=3 th_high=45 th_low=6 --output outputs/gpu_19_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 4.644189357757568,
+    "duration": 4.885451793670654,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_19_bg_number_frame10_bg_sampling_rate250_opening_size3_th_high45_th_low6.mp4"
@@ -330,7 +330,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=5 th_high=30 th_low=3 --output outputs/gpu_20_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.090461254119873,
+    "duration": 4.849806547164917,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_20_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high30_th_low3.mp4"
@@ -346,7 +346,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=5 th_high=30 th_low=6 --output outputs/gpu_21_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.054863452911377,
+    "duration": 4.795997381210327,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_21_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high30_th_low6.mp4"
@@ -362,7 +362,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=5 th_high=45 th_low=3 --output outputs/gpu_22_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.037587404251099,
+    "duration": 4.880131244659424,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_22_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high45_th_low3.mp4"
@@ -378,7 +378,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=250 opening_size=5 th_high=45 th_low=6 --output outputs/gpu_23_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 5.16208815574646,
+    "duration": 4.88689398765564,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_23_bg_number_frame10_bg_sampling_rate250_opening_size5_th_high45_th_low6.mp4"
@@ -394,7 +394,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=3 th_high=30 th_low=3 --output outputs/gpu_24_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 4.960601568222046,
+    "duration": 4.786920070648193,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_24_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high30_th_low3.mp4"
@@ -410,7 +410,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=3 th_high=30 th_low=6 --output outputs/gpu_25_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 4.691026926040649,
+    "duration": 4.850526571273804,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_25_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high30_th_low6.mp4"
@@ -426,7 +426,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=3 th_high=45 th_low=3 --output outputs/gpu_26_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 4.813110589981079,
+    "duration": 4.840510845184326,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_26_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high45_th_low3.mp4"
@@ -442,7 +442,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=3 th_high=45 th_low=6 --output outputs/gpu_27_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 4.852999448776245,
+    "duration": 4.82412052154541,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_27_bg_number_frame10_bg_sampling_rate500_opening_size3_th_high45_th_low6.mp4"
@@ -458,7 +458,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=5 th_high=30 th_low=3 --output outputs/gpu_28_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high30_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.017910718917847,
+    "duration": 4.723928689956665,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_28_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high30_th_low3.mp4"
@@ -474,7 +474,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=5 th_high=30 th_low=6 --output outputs/gpu_29_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high30_th_low6.mp4",
     "returncode": 0,
-    "duration": 4.805157423019409,
+    "duration": 5.028993606567383,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_29_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high30_th_low6.mp4"
@@ -490,7 +490,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=5 th_high=45 th_low=3 --output outputs/gpu_30_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high45_th_low3.mp4",
     "returncode": 0,
-    "duration": 5.025305986404419,
+    "duration": 5.2617106437683105,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_30_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high45_th_low3.mp4"
@@ -506,7 +506,7 @@
     },
     "command": "../gpgpu-cuda/build/stream --mode=gpu gpgpu-cuda/samples/ACET.mp4 bg_number_frame=10 bg_sampling_rate=500 opening_size=5 th_high=45 th_low=6 --output outputs/gpu_31_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high45_th_low6.mp4",
     "returncode": 0,
-    "duration": 4.798086404800415,
+    "duration": 4.959087133407593,
     "stdout": "",
     "stderr": "",
     "output": "outputs/gpu_31_bg_number_frame10_bg_sampling_rate500_opening_size5_th_high45_th_low6.mp4"
