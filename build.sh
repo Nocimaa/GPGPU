@@ -1,7 +1,7 @@
-#/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -eu
 
-SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 GP_DIR="$SCRIPT_ROOT/gpgpu-cuda"
 BUILD_DIR="$GP_DIR/build"
 
