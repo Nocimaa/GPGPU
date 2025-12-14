@@ -43,8 +43,11 @@ def get_param_grid(overrides):
     return grid
 
 
-def build_command(stream_exe, mode, video_path, params, bg_uri, output_path):
-    cmd = [str(stream_exe), f"--mode={mode}", str(video_path)]
+def build_command(stream_exe, mode, video_path, params, bg_uri, output_path, opt_flags=None):
+    cmd = [str(stream_exe), f"--mode={mode}"]
+    if opt_flags:
+        cmd.extend(opt_flags)
+    cmd.append(str(video_path))
     if bg_uri:
         cmd.append(f"bg={bg_uri}")
     for key, value in params.items():
@@ -107,6 +110,18 @@ def main():
                         help="Override a grid dimension (ex: --grid opening_size=5,7)")
     parser.add_argument("--use-lib", action="store_true",
                         help="Invoke the shared python library instead of the CLI executable")
+    parser.add_argument("--gpu-diff", type=int, choices=[0, 1], default=1,
+                        help="Toggle GPU diff kernel (0 or 1)")
+    parser.add_argument("--gpu-hysteresis", type=int, choices=[0, 1], default=1,
+                        help="Toggle GPU hysteresis")
+    parser.add_argument("--gpu-morphology", type=int, choices=[0, 1], default=1,
+                        help="Toggle GPU morphology")
+    parser.add_argument("--gpu-background", type=int, choices=[0, 1], default=1,
+                        help="Toggle GPU background update")
+    parser.add_argument("--gpu-overlay", type=int, choices=[0, 1], default=1,
+                        help="Toggle GPU overlay")
+    parser.add_argument("--kernel-fusion", type=int, choices=[0, 1], default=0,
+                        help="Toggle GPU kernel fusion")
     args = parser.parse_args()
 
     stream_exe = args.gpgpu_dir / "build" / "stream"
@@ -120,6 +135,15 @@ def main():
     grid = get_param_grid(args.grid)
     modes = [mode.strip() for mode in args.modes.split(",") if mode.strip()]
     combos = list(itertools.product(*(grid[key] for key in sorted(grid))))
+
+    opt_flags = [
+        f"--gpu-diff={args.gpu_diff}",
+        f"--gpu-hysteresis={args.gpu_hysteresis}",
+        f"--gpu-morphology={args.gpu_morphology}",
+        f"--gpu-background={args.gpu_background}",
+        f"--gpu-overlay={args.gpu_overlay}",
+        f"--kernel-fusion={args.kernel_fusion}",
+    ]
 
     output_dir = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -138,17 +162,24 @@ def main():
     should_keep_output = args.keep_output or args.use_lib
     if args.use_lib and not args.keep_output:
         print("Keeping generated videos because --use-lib was requested.")
-    for idx, combo in enumerate(combos):
+    opt_flags = [
+        f"--gpu-diff={args.gpu-diff? }"###
         params = dict(zip(sorted(grid), combo))
         for mode in modes:
             output_path = None
             if not args.dry_run:
                 suffix = "_".join(f"{k}{v}" for k, v in params.items())
                 temp_name = f"{mode}_{idx}_{suffix}.mp4"
-                output_path = output_dir / temp_name
+            output_path = output_dir / temp_name
 
             cmd = build_command(
-                stream_exe, mode, video_path, params, str(args.bg) if args.bg else None, output_path
+                stream_exe,
+                mode,
+                video_path,
+                params,
+                str(args.bg) if args.bg else None,
+                output_path,
+                opt_flags=opt_flags,
             )
 
             record = {"mode": mode, "params": params, "command": " ".join(cmd)}
