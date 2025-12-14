@@ -25,7 +25,7 @@ target_include_directories(gstfilter_objs PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/s
 target_link_libraries(gstfilter_objs PUBLIC PkgConfig::GStreamerVideo Compute)
 target_compile_options(gstfilter_objs PRIVATE -fPIC)
 
-add_executable(stream src/stream.cpp $<TARGET_OBJECTS:gstfilter_objs>)
+add_executable(stream src/stream.cpp src/StreamEngine.cpp $<TARGET_OBJECTS:gstfilter_objs>)
 
 
 target_link_libraries(stream PUBLIC PkgConfig::GStreamerVideo Compute)
@@ -35,7 +35,7 @@ set_target_properties(stream PROPERTIES
   INSTALL_RPATH "${CUDAToolkit_LIBRARY_DIR}"
   BUILD_WITH_INSTALL_RPATH TRUE)
 
-add_library(stream_engine SHARED $<TARGET_OBJECTS:gstfilter_objs>)
+add_library(stream_engine SHARED src/StreamEngine.cpp $<TARGET_OBJECTS:gstfilter_objs>)
 target_link_libraries(stream_engine PUBLIC PkgConfig::GStreamerVideo Compute)
 target_link_directories(stream_engine PUBLIC "${CUDAToolkit_LIBRARY_DIR}")
 set_target_properties(stream_engine PROPERTIES
