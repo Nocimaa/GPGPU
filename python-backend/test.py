@@ -201,7 +201,7 @@ def main():
                 duration = time.time() - start
                 result = None
             else:
-                result = subprocess.run(cmd, cwd=args.gpgpu_dir, capture_output=True, text=True)
+                result = subprocess.run(cmd, capture_output=True, text=True)
                 duration = time.time() - start
                 rc = result.returncode
 
