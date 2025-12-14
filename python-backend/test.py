@@ -162,16 +162,14 @@ def main():
     should_keep_output = args.keep_output or args.use_lib
     if args.use_lib and not args.keep_output:
         print("Keeping generated videos because --use-lib was requested.")
-    opt_flags = [
-        f"--gpu-diff={args.gpu-diff? }"###
+    for idx, combo in enumerate(combos):
         params = dict(zip(sorted(grid), combo))
         for mode in modes:
             output_path = None
             if not args.dry_run:
                 suffix = "_".join(f"{k}{v}" for k, v in params.items())
                 temp_name = f"{mode}_{idx}_{suffix}.mp4"
-            output_path = output_dir / temp_name
-
+                output_path = output_dir / temp_name
             cmd = build_command(
                 stream_exe,
                 mode,
