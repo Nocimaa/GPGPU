@@ -149,14 +149,13 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     results_path = output_dir / "grid_results.json"
 
+    run_stream_lib = None
     if args.use_lib:
         try:
             import stream_engine
+            run_stream_lib = stream_engine.run_stream
         except Exception as exc:  # pylint: disable=broad-except
-            parser.error(f"Unable to import stream_engine module: {exc}")
-        run_stream_lib = stream_engine.run_stream
-    else:
-        run_stream_lib = None
+            print(f"Warning: cannot import stream_engine ({exc}); falling back to CLI.", file=sys.stderr)
 
     records = []
     should_keep_output = args.keep_output or args.use_lib
