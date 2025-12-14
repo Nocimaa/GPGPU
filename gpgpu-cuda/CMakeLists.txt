@@ -20,23 +20,27 @@ add_library(Compute src/Compute.cpp src/Compute.cu src/logo.c)
 target_link_libraries(Compute PUBLIC CUDA::cudart)
 set_target_properties(Compute PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_executable(stream src/stream.cpp src/StreamEngine.cpp src/gstfilter.c src/gstfilter.h)
+add_library(gstfilter_objs OBJECT src/gstfilter.c)
+target_include_directories(gstfilter_objs PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_link_libraries(gstfilter_objs PUBLIC PkgConfig::GStreamerVideo Compute)
+target_compile_options(gstfilter_objs PRIVATE -fPIC)
+
+add_executable(stream src/stream.cpp $<TARGET_OBJECTS:gstfilter_objs>)
 
 
 target_link_libraries(stream PUBLIC PkgConfig::GStreamerVideo Compute)
 
-add_library(stream_engine SHARED src/StreamEngine.cpp src/gstfilter.c)
+target_link_directories(stream PUBLIC "${CUDAToolkit_LIBRARY_DIR}")
+set_target_properties(stream PROPERTIES
+  INSTALL_RPATH "${CUDAToolkit_LIBRARY_DIR}"
+  BUILD_WITH_INSTALL_RPATH TRUE)
+
+add_library(stream_engine SHARED $<TARGET_OBJECTS:gstfilter_objs>)
 target_link_libraries(stream_engine PUBLIC PkgConfig::GStreamerVideo Compute)
 target_link_directories(stream_engine PUBLIC "${CUDAToolkit_LIBRARY_DIR}")
 set_target_properties(stream_engine PROPERTIES
   OUTPUT_NAME "_stream_engine"
   PREFIX ""
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-  INSTALL_RPATH "${CUDAToolkit_LIBRARY_DIR}"
-  BUILD_WITH_INSTALL_RPATH TRUE)
-
-## La beauté de NIX....
-target_link_directories(stream PUBLIC "${CUDAToolkit_LIBRARY_DIR}")
-set_target_properties(stream PROPERTIES
   INSTALL_RPATH "${CUDAToolkit_LIBRARY_DIR}"
   BUILD_WITH_INSTALL_RPATH TRUE)

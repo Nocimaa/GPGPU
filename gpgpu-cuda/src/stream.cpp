@@ -55,6 +55,32 @@ int main(int argc, char* argv[])
     return 1;
   }
 
+  auto parse_bool_option = [&](const char* name, bool default_value)
+  {
+    auto value = cmdl(name, default_value ? "1" : "0").str();
+    return value == "1" || value == "true";
+  };
+  auto parse_int_option = [&](const char* name, int default_value)
+  {
+    auto stream = cmdl(name, default_value);
+    int value = default_value;
+    if (stream && (stream >> value))
+      return value;
+    return default_value;
+  };
+
+  params.opt_gpu_diff = parse_bool_option("--gpu-diff", params.device == e_device_t::GPU);
+  params.opt_gpu_hysteresis = parse_bool_option("--gpu-hysteresis", params.device == e_device_t::GPU);
+  params.opt_gpu_morphology = parse_bool_option("--gpu-morphology", params.device == e_device_t::GPU);
+  params.opt_gpu_background = parse_bool_option("--gpu-background", params.device == e_device_t::GPU);
+  params.opt_gpu_overlay = parse_bool_option("--gpu-overlay", params.device == e_device_t::GPU);
+  params.opt_kernel_fusion = parse_bool_option("--kernel-fusion", false);
+  params.opening_size = parse_int_option("opening_size", 3);
+  params.th_low = parse_int_option("th_low", 3);
+  params.th_high = parse_int_option("th_high", 30);
+  params.bg_sampling_rate = parse_int_option("bg_sampling_rate", 500);
+  params.bg_number_frame = parse_int_option("bg_number_frame", 10);
+
   g_debug("Using method: %s", method.c_str());
   gst_init(&argc, &argv);
   my_code_init();
