@@ -24,8 +24,8 @@ class StreamParams:
     output: Optional[str] = None
     background: Optional[str] = None
     opening_size: int = 3
-    th_low: int = 3
-    th_high: int = 30
+    th_low: int = 45
+    th_high: int = 65
     bg_sampling_rate: int = 500
     bg_number_frame: int = 10
     cpu_simd: bool = False

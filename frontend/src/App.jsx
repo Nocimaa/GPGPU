@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const initialParams = {
   opening_size: 3,
-  th_low: 3,
-  th_high: 30,
+  th_low: 45,
+  th_high: 65,
   bg_sampling_rate: 500,
   bg_number_frame: 10,
   cpu_simd: true,
