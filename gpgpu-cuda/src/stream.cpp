@@ -56,6 +56,6 @@ int main(int argc, char* argv[])
   params.bg_number_frame = parse_int_option("bg_number_frame", 10);
 
   g_debug("Using method: %s", method);
-  printf("Processing file: %s\n", method);
+  printf("Processing file: %s\n", filename.c_str());
   return run_stream(params, method, filename, output, "");
 }
