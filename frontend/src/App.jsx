@@ -24,6 +24,12 @@ const buildBackendUrl = (pathname) =>
 const LIVE_CAPTURE_INTERVAL_MS = 250;
 // Send 1 frame out of 6 to lighten the pipeline (applies to CPU & GPU modes).
 const LIVE_SKIP_BETWEEN_PAIRS = 5;
+// Lighter settings when streaming in GPU mode only.
+const LIVE_GPU_PARAMS = {
+  opening_size: 1,
+  bg_sampling_rate: 1000,
+  bg_number_frame: 5,
+};
 
 const buildBackendWebSocketUrl = (pathname) => {
   const base =
@@ -218,11 +224,15 @@ function App() {
     const dataUrl = canvas.toDataURL("image/png");
 
     liveSkipCounterRef.current = LIVE_SKIP_BETWEEN_PAIRS;
+    const liveParams =
+      modeRef.current === "gpu"
+        ? { ...paramsRef.current, ...LIVE_GPU_PARAMS }
+        : { ...paramsRef.current };
     const payload = {
       type: "frame",
       frame: dataUrl,
       mode: modeRef.current,
-      params: { ...paramsRef.current },
+      params: liveParams,
     };
     ws.send(JSON.stringify(payload));
     setLiveStatus("Frame sent");
