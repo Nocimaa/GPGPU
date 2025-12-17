@@ -7,6 +7,9 @@
 #include <cstdint>
 #include <cstring>
 #include <deque>
+#if defined(__SSE2__)
+#include <emmintrin.h>
+#endif
 #include <vector>
 
 // ====================
