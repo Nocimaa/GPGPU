@@ -100,6 +100,11 @@ int run_stream(const Parameters& params,
     if (filename.empty())
         return 1;
 
+    // Avoid the GStreamer GL/KMS/VAAPI plugins probing /dev/dri endlessly on headless servers.
+    // We only need CPU ↔ CUDA, so force the registry to ignore those sinks.
+    g_setenv("GST_GL_API", "none", TRUE);
+    g_setenv("GST_PLUGIN_FEATURE_RANK", "gl*:0,kms*:0,vaapi*:0", FALSE);
+
     if (!gst_is_initialized())
         gst_init(nullptr, nullptr);
 
@@ -126,7 +131,8 @@ extern "C" int run_stream_c(const char* mode,
                             int th_low,
                             int th_high,
                             int bg_sampling_rate,
-                            int bg_number_frame)
+                            int bg_number_frame,
+                            int cpu_simd)
 {
     if (mode == nullptr || filename == nullptr)
         return 1;
@@ -150,6 +156,7 @@ extern "C" int run_stream_c(const char* mode,
     params.opt_gpu_background = use_gpu;
     params.opt_gpu_overlay = use_gpu;
     params.opt_kernel_fusion = false;
+    params.opt_cpu_simd = cpu_simd != 0;
     params.opening_size = opening_size;
     params.th_low = th_low;
     params.th_high = th_high;

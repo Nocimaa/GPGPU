@@ -58,21 +58,20 @@ Image<T>::Image(const char* path)
 }
 
 template <class T>
-Image<T>::Image(int width, int height, bool device)
-{
-  static auto cudaDelete = [](void* ptr) { cudaFree(ptr); };
-  this->width  = width;
-  this->height = height;
-  if (device) {
-    size_t pitch;
-    cudaMallocPitch((void**)&this->buffer, &pitch, this->width * sizeof(T), this->height);
-    this->stride = pitch;
-    this->deleter = cudaDelete;
-  } else {
-    this->buffer = (T*)malloc(this->height * this->stride);
-    this->stride = width * sizeof(T);
-    this->deleter = free;
-  }
+Image<T>::Image(int width, int height, bool device) {
+    this->width = width;
+    this->height = height;
+    this->stride = width * sizeof(T); // SET THIS FIRST
+
+    if (device) {
+        size_t pitch;
+        cudaMallocPitch((void**)&this->buffer, &pitch, width * sizeof(T), height);
+        this->stride = pitch;
+        this->deleter = [](void* ptr) { cudaFree(ptr); };
+    } else {
+        this->buffer = (T*)malloc(this->height * this->stride);
+        this->deleter = free;
+    }
 }
 
 template <class T>

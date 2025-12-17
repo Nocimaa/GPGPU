@@ -39,6 +39,9 @@ struct ProcessingState
     int height = 0;
 
     std::vector<rgb8> background;
+    std::vector<uint8_t> background_r;
+    std::vector<uint8_t> background_g;
+    std::vector<uint8_t> background_b;
     std::vector<uint8_t> input_mask;
     std::vector<uint8_t> marker_mask;
     std::vector<uint8_t> motion_mask;
@@ -70,6 +73,31 @@ using DurationMs = std::chrono::duration<float, std::milli>;
 static size_t total_pixels(const ProcessingState& state)
 {
     return static_cast<size_t>(state.width) * static_cast<size_t>(state.height);
+}
+
+static void sync_background_planes(ProcessingState& state)
+{
+    const size_t total = total_pixels(state);
+    state.background_r.resize(total);
+    state.background_g.resize(total);
+    state.background_b.resize(total);
+
+    for (size_t i = 0; i < total; ++i)
+    {
+        const rgb8& bg = state.background[i];
+        state.background_r[i] = bg.r;
+        state.background_g[i] = bg.g;
+        state.background_b[i] = bg.b;
+    }
+}
+
+static inline __m128i abs_diff_epi16(const __m128i& a, const __m128i& b)
+{
+    const __m128i diff = _mm_sub_epi16(a, b);
+    const __m128i neg = _mm_sub_epi16(b, a);
+    const __m128i mask = _mm_cmpgt_epi16(diff, _mm_setzero_si128());
+    return _mm_or_si128(_mm_and_si128(mask, diff),
+                        _mm_andnot_si128(mask, neg));
 }
 
 // ====================
@@ -154,6 +182,9 @@ __host__ __device__ inline bool dilation_test(const uint8_t* src, int x, int y, 
 // ====================
 static void reset_device_buffers(ProcessingState& state)
 {
+    if (!state.config.use_gpu)
+        return;
+
     if (state.d_input_mask)   { cudaFree(state.d_input_mask);   state.d_input_mask = nullptr; }
     if (state.d_marker_mask)  { cudaFree(state.d_marker_mask);  state.d_marker_mask = nullptr; }
     if (state.d_temp_mask)    { cudaFree(state.d_temp_mask);    state.d_temp_mask = nullptr; }
@@ -181,22 +212,27 @@ static void init_state(ProcessingState& state, uint8_t* buffer, int width, int h
         std::memcpy(dst, src, width * sizeof(rgb8));
     }
 
-    state.d_background = Image<rgb8>(width, height, true);
-    state.d_current    = Image<rgb8>(width, height, true);
+    sync_background_planes(state);
 
-    reset_device_buffers(state);
-    cudaMalloc(&state.d_input_mask,  width * height);
-    cudaMalloc(&state.d_marker_mask, width * height);
-    cudaMalloc(&state.d_temp_mask,   width * height);
-    cudaMalloc(&state.d_changed,     sizeof(uint32_t));
+    if (state.config.use_gpu)
+    {
+        state.d_background = Image<rgb8>(width, height, true);
+        state.d_current    = Image<rgb8>(width, height, true);
 
-    cudaMemcpy2D(state.d_background.buffer,
-                 state.d_background.stride,
-                 state.background.data(),
-                 width * sizeof(rgb8),
-                 width * sizeof(rgb8),
-                 height,
-                 cudaMemcpyHostToDevice);
+        reset_device_buffers(state);
+        cudaMalloc(&state.d_input_mask,  width * height);
+        cudaMalloc(&state.d_marker_mask, width * height);
+        cudaMalloc(&state.d_temp_mask,   width * height);
+        cudaMalloc(&state.d_changed,     sizeof(uint32_t));
+
+        cudaMemcpy2D(state.d_background.buffer,
+                     state.d_background.stride,
+                     state.background.data(),
+                     width * sizeof(rgb8),
+                     width * sizeof(rgb8),
+                     height,
+                     cudaMemcpyHostToDevice);
+    }
 
     state.initialized = true;
     state.frame_counter = 0;
@@ -214,6 +250,108 @@ static bool should_update_background(const ProcessingState& state)
 {
     return g_params.bg_sampling_rate <= 1 || (state.frame_counter % g_params.bg_sampling_rate == 0);
 }
+
+// Return true only when the current build actually supports SSE2, so we can
+// safely fall back on platforms (e.g. ARM) where SIMD intrinsics are missing.
+static bool cpu_simd_available()
+{
+#if defined(__SSE2__)
+    return true;
+#else
+    return false;
+#endif
+}
+
+static void compute_diff_cpu_simd(ProcessingState& state, uint8_t* buffer, int stride)
+{
+    const int w = state.width;
+    const int h = state.height;
+
+    const uint8_t low_th  = static_cast<uint8_t>(std::clamp(g_params.th_low,  0, 255));
+    const uint8_t high_th = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));
+
+    const auto* bg_r = state.background_r.data();
+    const auto* bg_g = state.background_g.data();
+    const auto* bg_b = state.background_b.data();
+    auto* low_mask   = state.input_mask.data();
+    auto* high_mask  = state.marker_mask.data();
+
+    constexpr int kSimdChunk = 8;
+    alignas(16) uint8_t curr_r[kSimdChunk];
+    alignas(16) uint8_t curr_g[kSimdChunk];
+    alignas(16) uint8_t curr_b[kSimdChunk];
+
+    const __m128i low_th_vec  = _mm_set1_epi16(static_cast<int16_t>(low_th));
+    const __m128i high_th_vec = _mm_set1_epi16(static_cast<int16_t>(high_th));
+    const __m128i zero        = _mm_setzero_si128();
+
+    for (int y = 0; y < h; ++y)
+    {
+        const auto* curr_row =
+            reinterpret_cast<const rgb8*>((std::byte*)buffer + y * stride);
+
+        int x = 0;
+        const int row_base = y * w;
+
+        for (; x + kSimdChunk <= w; x += kSimdChunk)
+        {
+            for (int i = 0; i < kSimdChunk; ++i)
+            {
+                const rgb8& p = curr_row[x + i];
+                curr_r[i] = p.r;
+                curr_g[i] = p.g;
+                curr_b[i] = p.b;
+            }
+
+            const int index = row_base + x;
+
+            const __m128i curr_r_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(curr_r));
+            const __m128i curr_g_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(curr_g));
+            const __m128i curr_b_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(curr_b));
+
+            const __m128i bg_r_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(bg_r + index));
+            const __m128i bg_g_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(bg_g + index));
+            const __m128i bg_b_vec = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(bg_b + index));
+
+            const __m128i curr_r_lo = _mm_unpacklo_epi8(curr_r_vec, zero);
+            const __m128i curr_g_lo = _mm_unpacklo_epi8(curr_g_vec, zero);
+            const __m128i curr_b_lo = _mm_unpacklo_epi8(curr_b_vec, zero);
+
+            const __m128i bg_r_lo = _mm_unpacklo_epi8(bg_r_vec, zero);
+            const __m128i bg_g_lo = _mm_unpacklo_epi8(bg_g_vec, zero);
+            const __m128i bg_b_lo = _mm_unpacklo_epi8(bg_b_vec, zero);
+
+            const __m128i dr = abs_diff_epi16(curr_r_lo, bg_r_lo);
+            const __m128i dg = abs_diff_epi16(curr_g_lo, bg_g_lo);
+            const __m128i db = abs_diff_epi16(curr_b_lo, bg_b_lo);
+
+            const __m128i sum_rg  = _mm_add_epi16(dr, dg);
+            const __m128i sum_rgb = _mm_add_epi16(sum_rg, db);
+
+            const __m128i low_cmp  = _mm_cmpgt_epi16(sum_rgb, low_th_vec);
+            const __m128i high_cmp = _mm_cmpgt_epi16(sum_rgb, high_th_vec);
+
+            // FIX: use signed packing so 0xFFFF -> 255
+            const __m128i low_packed  = _mm_packs_epi16(low_cmp,  zero);
+            const __m128i high_packed = _mm_packs_epi16(high_cmp, zero);
+
+            _mm_storel_epi64(reinterpret_cast<__m128i*>(low_mask  + index), low_packed);
+            _mm_storel_epi64(reinterpret_cast<__m128i*>(high_mask + index), high_packed);
+        }
+
+        for (; x < w; ++x)
+        {
+            const int i = row_base + x;
+            compute_diff_pixel(curr_row[x],
+                               state.background[i],
+                               low_mask[i],
+                               high_mask[i],
+                               low_th,
+                               high_th);
+        }
+    }
+}
+
 
 static void compute_diff_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 {
@@ -337,6 +475,10 @@ static void update_background_cpu(ProcessingState& state, uint8_t* buffer, int s
             bg.r = (bg.r * (den - 1) + curr.r) / den;
             bg.g = (bg.g * (den - 1) + curr.g) / den;
             bg.b = (bg.b * (den - 1) + curr.b) / den;
+
+            state.background_r[i] = bg.r;
+            state.background_g[i] = bg.g;
+            state.background_b[i] = bg.b;
         }
     }
 }
@@ -599,6 +741,8 @@ static void update_background_gpu(ProcessingState& state)
                  state.width * sizeof(rgb8),
                  state.height,
                  cudaMemcpyDeviceToHost);
+
+    sync_background_planes(state);
 }
 
 static void overlay_gpu(ProcessingState& state)
@@ -661,7 +805,13 @@ static void process_frame(ProcessingState& state, uint8_t* buffer, int width, in
 
     const bool fuse_overlay_in_diff = (run_gpu_diff && run_gpu_overlay && cfg.kernel_fusion);
 
-    auto run_diff_cpu = [&]() { compute_diff_cpu(state, buffer, stride); };
+    auto run_diff_cpu = [&]() {
+        const bool do_simd = cfg.opt_cpu_simd && cpu_simd_available();
+        if (do_simd)
+            compute_diff_cpu_simd(state, buffer, stride);
+        else
+            compute_diff_cpu(state, buffer, stride);
+    };
     auto run_diff_gpu = [&]() { compute_diff_gpu(state, buffer, stride, fuse_overlay_in_diff); };
     run_processing_stage(run_gpu_diff, run_diff_cpu, run_diff_gpu, state.timing.diff_ms);
 
@@ -731,7 +881,6 @@ extern "C" void cpt_init(Parameters* params)
 {
     g_params = *params;
 
-    reset_device_buffers(g_state);
     g_state = ProcessingState();
 
     g_state.config.use_gpu = (params->device == e_device_t::GPU);
@@ -743,11 +892,18 @@ extern "C" void cpt_init(Parameters* params)
     g_state.config.gpu_overlay           = params->opt_gpu_overlay    && g_state.config.use_gpu;
     g_state.config.kernel_fusion         = params->opt_kernel_fusion  && g_state.config.use_gpu;
 
-    const uint8_t low  = static_cast<uint8_t>(std::clamp(g_params.th_low,  0, 255));
-    const uint8_t high = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));
+    if (g_state.config.use_gpu)
+    {
+        const uint8_t low  = static_cast<uint8_t>(std::clamp(g_params.th_low,  0, 255));
+        const uint8_t high = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));
 
-    cudaMemcpyToSymbol(c_low_threshold,  &low,  sizeof(low));
-    cudaMemcpyToSymbol(c_high_threshold, &high, sizeof(high));
+        cudaError_t err_l = cudaMemcpyToSymbol(c_low_threshold,  &low,  sizeof(low));
+        cudaError_t err_h = cudaMemcpyToSymbol(c_high_threshold, &high, sizeof(high));
+
+        if (err_l != cudaSuccess || err_h != cudaSuccess) {
+            g_state.config.use_gpu = false;
+        }
+    }
 }
 
 extern "C" void cpt_process_frame(uint8_t* buffer, int width, int height, int stride)

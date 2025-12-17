@@ -28,6 +28,7 @@ class StreamParams:
     th_high: int = 30
     bg_sampling_rate: int = 500
     bg_number_frame: int = 10
+    cpu_simd: bool = False
 
 
 class StreamLib:
@@ -40,6 +41,7 @@ class StreamLib:
             c_char_p,
             c_char_p,
             c_char_p,
+            c_int,
             c_int,
             c_int,
             c_int,
@@ -60,6 +62,7 @@ class StreamLib:
             target.th_high,
             target.bg_sampling_rate,
             target.bg_number_frame,
+            1 if target.cpu_simd else 0,
         )
 
 
@@ -77,6 +80,7 @@ def run_stream(
     th_high: int = 30,
     bg_sampling_rate: int = 500,
     bg_number_frame: int = 10,
+    cpu_simd: bool = False,
 ) -> int:
     """Run the streaming pipeline through the shared library."""
 
@@ -88,5 +92,6 @@ def run_stream(
         th_high=th_high,
         bg_sampling_rate=bg_sampling_rate,
         bg_number_frame=bg_number_frame,
+        cpu_simd=cpu_simd,
     )
     return _stream_lib.run(mode, filename, params=params)

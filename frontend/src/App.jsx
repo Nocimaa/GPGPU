@@ -6,6 +6,7 @@ const initialParams = {
   th_high: 30,
   bg_sampling_rate: 500,
   bg_number_frame: 10,
+  cpu_simd: true,
 };
 
 const backendBaseUrl =
@@ -13,6 +14,34 @@ const backendBaseUrl =
 
 const buildBackendUrl = (pathname) =>
   backendBaseUrl ? new URL(pathname, backendBaseUrl).href : pathname;
+
+const LIVE_CAPTURE_INTERVAL_MS = 250;
+const LIVE_SKIP_BETWEEN_PAIRS = 1;
+
+const buildBackendWebSocketUrl = (pathname) => {
+  const base =
+    backendBaseUrl || (typeof window !== "undefined" ? window.location.origin : "http://localhost");
+  const url = new URL(pathname, base);
+  if (url.protocol === "https:") {
+    url.protocol = "wss:";
+  } else if (url.protocol === "http:") {
+    url.protocol = "ws:";
+  }
+  return url.href;
+};
+
+const dataUrlToBlob = (dataUrl) => {
+  const [meta, payload] = dataUrl.split(",");
+  const binary = atob(payload);
+  const length = binary.length;
+  const buffer = new Uint8Array(length);
+  for (let i = 0; i < length; i++) {
+    buffer[i] = binary.charCodeAt(i);
+  }
+  const mimeMatch = meta.match(/data:([^;]+);/);
+  const mimeType = mimeMatch ? mimeMatch[1] : "image/png";
+  return new Blob([buffer], { type: mimeType });
+};
 
 function App() {
   const [imageA, setImageA] = useState(null);
@@ -24,8 +53,12 @@ function App() {
   const [error, setError] = useState("");
   const [cameraError, setCameraError] = useState("");
   const videoRef = useRef(null);
+  const liveVideoRef = useRef(null);
   const [streamActive, setStreamActive] = useState(false);
   const streamRef = useRef(null);
+  const liveWsRef = useRef(null);
+  const liveCaptureTimerRef = useRef(null);
+  const liveSkipCounterRef = useRef(0);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [dropActive, setDropActive] = useState(false);
   const [captureMode, setCaptureMode] = useState("webcam");
@@ -33,6 +66,13 @@ function App() {
   const [videoResultUrl, setVideoResultUrl] = useState(null);
   const [videoLoading, setVideoLoading] = useState(false);
   const [videoError, setVideoError] = useState("");
+  const [videoExecTime, setVideoExecTime] = useState("");
+  const [liveStreaming, setLiveStreaming] = useState(false);
+  const [liveResultUrl, setLiveResultUrl] = useState(null);
+  const [liveError, setLiveError] = useState("");
+  const [liveStatus, setLiveStatus] = useState("Idle");
+  const modeRef = useRef(mode);
+  const paramsRef = useRef(params);
 
   const canSubmit = useMemo(() => imageA && imageB && !loading, [imageA, imageB, loading]);
 
@@ -40,6 +80,18 @@ function App() {
     const { name, value } = event.target;
     setParams((prev) => ({ ...prev, [name]: Number(value) }));
   };
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setParams((prev) => ({ ...prev, [name]: checked }));
+  };
+  useEffect(() => {
+    modeRef.current = mode;
+  }, [mode]);
+  useEffect(() => {
+    paramsRef.current = params;
+  }, [params]);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -85,6 +137,7 @@ function App() {
     setVideoLoading(true);
     setVideoError("");
     setVideoResultUrl(null);
+    setVideoExecTime("");
 
     const formData = new FormData();
     formData.append("video", videoFile);
@@ -103,8 +156,10 @@ function App() {
         throw new Error(`${response.status} ${response.statusText}`);
       }
 
+      const execTime = response.headers.get("x-execution-time") ?? "";
       const blob = await response.blob();
       setVideoResultUrl(URL.createObjectURL(blob));
+      setVideoExecTime(execTime);
     } catch (err) {
       setVideoError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -123,19 +178,137 @@ function App() {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
       }
+      if (liveVideoRef.current) {
+        liveVideoRef.current.srcObject = stream;
+        liveVideoRef.current.play();
+      }
     } catch (err) {
       setCameraError("Unable to access the webcam.");
     }
+  };
+
+  const stopLiveCaptureLoop = () => {
+    if (liveCaptureTimerRef.current !== null) {
+      clearInterval(liveCaptureTimerRef.current);
+      liveCaptureTimerRef.current = null;
+    }
+  };
+
+  const captureLiveFrame = () => {
+    const video = liveVideoRef.current;
+    const ws = liveWsRef.current;
+    if (!video || !ws || ws.readyState !== WebSocket.OPEN) return;
+    if (liveSkipCounterRef.current > 0) {
+      liveSkipCounterRef.current -= 1;
+      return;
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const context = canvas.getContext("2d");
+    context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/png");
+
+    liveSkipCounterRef.current = LIVE_SKIP_BETWEEN_PAIRS;
+    const payload = {
+      type: "frame",
+      frame: dataUrl,
+      mode: modeRef.current,
+      params: { ...paramsRef.current },
+    };
+    ws.send(JSON.stringify(payload));
+    setLiveStatus("Frame sent");
+  };
+
+  const startLiveCaptureLoop = () => {
+    if (liveCaptureTimerRef.current !== null) return;
+    liveCaptureTimerRef.current = setInterval(captureLiveFrame, LIVE_CAPTURE_INTERVAL_MS);
+  };
+
+  const stopLiveRecording = () => {
+    stopLiveCaptureLoop();
+    if (liveWsRef.current) {
+      liveWsRef.current.close();
+      liveWsRef.current = null;
+    }
+    liveSkipCounterRef.current = 0;
+    setLiveStreaming(false);
+    setLiveStatus("Idle");
+  };
+
+  const startLiveStream = () => {
+    if (liveStreaming) return;
+    if (!streamRef.current) {
+      setLiveError("Camera must be active to start live streaming.");
+      return;
+    }
+    if (liveWsRef.current) {
+      liveWsRef.current.close();
+      liveWsRef.current = null;
+    }
+
+    setLiveError("");
+    setLiveStatus("Connecting...");
+    const wsUrl = buildBackendWebSocketUrl("/ws/live");
+    const ws = new WebSocket(wsUrl);
+    ws.onopen = () => {
+      setLiveStatus("Connected");
+      setLiveStreaming(true);
+      liveSkipCounterRef.current = 0;
+      startLiveCaptureLoop();
+      setLiveStatus("Recording...");
+    };
+      ws.onmessage = (event) => {
+        try {
+          const payload = JSON.parse(event.data);
+          if (payload.error) {
+            setLiveError(payload.error);
+            setLiveStatus("Server error");
+            return;
+          }
+          if (payload.overlay) {
+            const blob = dataUrlToBlob(payload.overlay);
+            setLiveResultUrl((prev) => {
+              if (prev) URL.revokeObjectURL(prev);
+              return URL.createObjectURL(blob);
+            });
+            setLiveStatus("Overlay received");
+            return;
+          }
+          if (payload.status) {
+            setLiveStatus(payload.status);
+          }
+        } catch (err) {
+          setLiveError("Invalid overlay data from server.");
+        }
+      };
+    ws.onerror = () => {
+      setLiveError("Live websocket error.");
+      setLiveStatus("Disconnected");
+    };
+    ws.onclose = () => {
+      stopLiveRecording();
+    };
+    liveWsRef.current = ws;
+  };
+
+  const stopLiveStream = () => {
+    stopLiveRecording();
   };
 
   const stopCamera = () => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
     setStreamActive(false);
+    stopLiveRecording();
   };
 
+  const shouldUseCamera =
+    (activeTab === "image" && captureMode === "webcam") || activeTab === "livecam";
+
   useEffect(() => {
-    if (activeTab === "image" && captureMode === "webcam") {
+    if (shouldUseCamera) {
       startCamera();
     } else {
       stopCamera();
@@ -144,7 +317,13 @@ function App() {
     return () => {
       stopCamera();
     };
-  }, [activeTab, captureMode]);
+  }, [shouldUseCamera]);
+
+  useEffect(() => {
+    if (activeTab !== "livecam") {
+      stopLiveRecording();
+    }
+  }, [activeTab]);
   const captureFrame = async (setter, label) => {
     if (!streamRef.current || !videoRef.current) {
       setCameraError("Camera is not ready.");
@@ -196,6 +375,14 @@ function App() {
     return () => URL.revokeObjectURL(videoResultUrl);
   }, [videoResultUrl]);
 
+  useEffect(() => {
+    return () => {
+      if (liveResultUrl) {
+        URL.revokeObjectURL(liveResultUrl);
+      }
+    };
+  }, [liveResultUrl]);
+
   const handleDrop = (event) => {
     event.preventDefault();
     const [first, second] = Array.from(event.dataTransfer.files);
@@ -237,6 +424,9 @@ function App() {
             }}
           >
             Image
+          </button>
+          <button type="button" className={activeTab === "livecam" ? "active" : ""} onClick={() => setActiveTab("livecam")}>
+            Livecam
           </button>
           <button type="button" className={activeTab === "video" ? "active" : ""} onClick={() => setActiveTab("video")}>
             Video
@@ -367,24 +557,39 @@ function App() {
             <section className="card full" id="image">
                 <h2>Parameters</h2>
                 <div className="row">
-                  <label>
-                    Mode
-                    <select value={mode} onChange={(event) => setMode(event.target.value)}>
-                      <option value="cpu">CPU</option>
-                      <option value="gpu">GPU</option>
-                    </select>
-                  </label>
-                  <label>
-                    Opening size
-                    <input
-                      name="opening_size"
-                      type="number"
-                      min="1"
-                      step="2"
-                      value={params.opening_size}
-                      onChange={handleChange}
-                    />
-                  </label>
+                  <div className="stacked-control">
+                    <label>
+                      Mode
+                      <select value={mode} onChange={(event) => setMode(event.target.value)}>
+                        <option value="cpu">CPU</option>
+                        <option value="gpu">GPU</option>
+                      </select>
+                    </label>
+                    {mode === "cpu" && (
+                      <label className="checkbox">
+                        <input
+                          name="cpu_simd"
+                          type="checkbox"
+                          checked={params.cpu_simd}
+                          onChange={handleCheckboxChange}
+                        />
+                        SIMD active
+                      </label>
+                    )}
+                  </div>
+                  <div className="stacked-control">
+                    <label>
+                      Opening size
+                      <input
+                        name="opening_size"
+                        type="number"
+                        min="1"
+                        step="2"
+                        value={params.opening_size}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
                 </div>
                 <div className="row">
                   <label>
@@ -435,6 +640,40 @@ function App() {
           </>
         )}
 
+        {activeTab === "livecam" && (
+          <section className="card live-card">
+            <header className="panel-header">
+              <div>
+                <h1>Live camera diff</h1>
+                <p>Stream the webcam into the backend pipeline and visualize the latest motion overlay.</p>
+              </div>
+            </header>
+            <div className="camera-panel">
+              <div className="camera-video-wrapper">
+                <video ref={liveVideoRef} className="camera-video" autoPlay muted playsInline />
+              </div>
+              <div className="camera-actions">
+                <button type="button" onClick={startLiveStream} disabled={liveStreaming || !streamActive}>
+                  {liveStreaming ? "Streaming…" : "Start live capture"}
+                </button>
+                <button type="button" onClick={stopLiveStream} disabled={!liveStreaming}>
+                  Stop
+                </button>
+              </div>
+              <p>Status: {liveStatus}</p>
+              {liveError && <p className="error smaller">{liveError}</p>}
+            </div>
+              <section className="card result-card full">
+                <h2>Latest overlay</h2>
+                {liveResultUrl ? (
+                <img src={liveResultUrl} className="result-image" alt="Live overlay" />
+                ) : (
+                  <p className="placeholder">Waiting for the next chunk to finish.</p>
+                )}
+            </section>
+          </section>
+        )}
+
         {activeTab === "video" && (
           <section className="insights" id="video">
             <article>
@@ -453,6 +692,28 @@ function App() {
             <h2>Video upload</h2>
             <p>Drop a clip or select a file to apply the motion-overlay pipeline on multiple frames.</p>
             <form className="video-form" onSubmit={handleVideoSubmit}>
+              <div className="row">
+                <div className="stacked-control">
+                  <label>
+                    Mode
+                    <select value={mode} onChange={(event) => setMode(event.target.value)}>
+                      <option value="cpu">CPU</option>
+                      <option value="gpu">GPU</option>
+                    </select>
+                  </label>
+                  {mode === "cpu" && (
+                    <label className="checkbox">
+                      <input
+                        name="cpu_simd"
+                        type="checkbox"
+                        checked={params.cpu_simd}
+                        onChange={handleCheckboxChange}
+                      />
+                      SIMD active
+                    </label>
+                  )}
+                </div>
+              </div>
               <label>
                 Video file
                 <input type="file" accept="video/*" onChange={(event) => setVideoFile(event.target.files?.[0] ?? null)} />
@@ -462,6 +723,9 @@ function App() {
               </button>
             </form>
             {videoError && <p className="error smaller">{videoError}</p>}
+            {videoExecTime && (
+              <p className="smaller">Execution time: {Number(videoExecTime).toFixed(3)}s</p>
+            )}
             {videoResultUrl && (
               <video controls muted src={videoResultUrl} className="video-preview"></video>
             )}
