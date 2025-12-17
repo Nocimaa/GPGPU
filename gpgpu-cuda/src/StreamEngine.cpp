@@ -100,6 +100,11 @@ int run_stream(const Parameters& params,
     if (filename.empty())
         return 1;
 
+    // Avoid the GStreamer GL/KMS/VAAPI plugins probing /dev/dri endlessly on headless servers.
+    // We only need CPU ↔ CUDA, so force the registry to ignore those sinks.
+    g_setenv("GST_GL_API", "none", TRUE);
+    g_setenv("GST_PLUGIN_FEATURE_RANK", "gl*:0,kms*:0,vaapi*:0", FALSE);
+
     if (!gst_is_initialized())
         gst_init(nullptr, nullptr);
 
