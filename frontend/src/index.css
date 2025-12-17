@@ -380,6 +380,30 @@ label {
   color: #bec9e6;
 }
 
+.stacked-control {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 260px;
+  align-items: flex-start;
+}
+
+.checkbox {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  accent-color: #23d5ab;
+}
+
 input[type="file"] {
   border-radius: 10px;
   padding: 12px;

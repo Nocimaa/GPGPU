@@ -23,6 +23,7 @@ typedef struct  {
     bool opt_gpu_background;
     bool opt_gpu_overlay;
     bool opt_kernel_fusion;
+    bool opt_cpu_simd;
     int opening_size;
     int th_low;
     int th_high;

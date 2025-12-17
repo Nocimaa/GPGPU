@@ -19,4 +19,5 @@ extern "C" int run_stream_c(const char* mode,
                             int th_low,
                             int th_high,
                             int bg_sampling_rate,
-                            int bg_number_frame);
+                            int bg_number_frame,
+                            int cpu_simd);

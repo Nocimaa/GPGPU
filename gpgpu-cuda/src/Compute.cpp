@@ -30,9 +30,4 @@ void compute_cpp(ImageView<rgb8> in)
     }
   }
 
-  // You can fake a long-time process with sleep
-   {
-     using namespace std::chrono_literals;
-     std::this_thread::sleep_for(50ms);
-   }
 }

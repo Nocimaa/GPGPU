@@ -126,7 +126,8 @@ extern "C" int run_stream_c(const char* mode,
                             int th_low,
                             int th_high,
                             int bg_sampling_rate,
-                            int bg_number_frame)
+                            int bg_number_frame,
+                            int cpu_simd)
 {
     if (mode == nullptr || filename == nullptr)
         return 1;
@@ -150,6 +151,7 @@ extern "C" int run_stream_c(const char* mode,
     params.opt_gpu_background = use_gpu;
     params.opt_gpu_overlay = use_gpu;
     params.opt_kernel_fusion = false;
+    params.opt_cpu_simd = cpu_simd != 0;
     params.opening_size = opening_size;
     params.th_low = th_low;
     params.th_high = th_high;

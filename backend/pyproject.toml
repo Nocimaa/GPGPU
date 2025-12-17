@@ -8,4 +8,5 @@ dependencies = [
     "fastapi>=0.124.4",
     "python-multipart>=0.0.20",
     "uvicorn>=0.38.0",
+    "websockets>=15.0.1",
 ]
