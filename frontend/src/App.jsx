@@ -446,19 +446,11 @@ function App() {
           <button type="button" className={activeTab === "video" ? "active" : ""} onClick={() => setActiveTab("video")}>
             Video
           </button>
-          <button type="button" className={activeTab === "benchmarks" ? "active" : ""} onClick={() => setActiveTab("benchmarks")}>
-            Benchmarks
-          </button>
           <button type="button" className={activeTab === "settings" ? "active" : ""} onClick={() => setActiveTab("settings")}>
             Settings
           </button>
         </div>
-        <div className="nav-actions">
-          <button type="button">Run Demo</button>
-          <button type="button" className="ghost">
-            Export
-          </button>
-        </div>
+        <div className="nav-actions"></div>
       </nav>
 
       <div className="panel wide">
@@ -677,6 +669,13 @@ function App() {
                 <h1>Live camera diff</h1>
                 <p>Stream the webcam into the backend pipeline and visualize the latest motion overlay.</p>
               </div>
+              <label className="stacked-control" style={{ maxWidth: "200px" }}>
+                Mode
+                <select value={mode} onChange={(event) => setMode(event.target.value)}>
+                  <option value="cpu">CPU</option>
+                  <option value="gpu">GPU</option>
+                </select>
+              </label>
             </header>
             <div className="camera-panel">
               <div className="camera-video-wrapper">
@@ -774,19 +773,6 @@ function App() {
             {videoResultUrl && (
               <video controls muted src={videoResultUrl} className="video-preview"></video>
             )}
-          </section>
-        )}
-
-        {activeTab === "benchmarks" && (
-          <section className="insights" id="benchmarks">
-            <article>
-              <h3>Performance</h3>
-              <p>CPU and GPU thresholds will be shown here once benchmarking runs are available.</p>
-            </article>
-            <article>
-              <h3>Next steps</h3>
-              <p>Queue captures, tweak morphology, and compare results side-by-side with future tabs.</p>
-            </article>
           </section>
         )}
 
