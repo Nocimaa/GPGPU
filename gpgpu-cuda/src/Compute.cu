@@ -356,6 +356,9 @@ static void compute_diff_cpu_simd(ProcessingState& state, uint8_t* buffer, int s
 }
 
 
+#if defined(__GNUC__)
+__attribute__((optimize("no-tree-vectorize")))
+#endif
 static void compute_diff_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 {
     const int w = state.width;
@@ -370,12 +373,22 @@ static void compute_diff_cpu(ProcessingState& state, uint8_t* buffer, int stride
         for (int x = 0; x < w; ++x)
         {
             const int i = y * w + x;
-            compute_diff_pixel(curr_row[x],
-                               state.background[i],
-                               state.input_mask[i],
-                               state.marker_mask[i],
-                               low_th,
-                               high_th);
+            // Extra scalar bookkeeping and volatile temporaries to keep this
+            // path clearly non-vectorized compared to the SIMD version.
+            const rgb8 curr = curr_row[x];
+            const rgb8 bg   = state.background[i];
+
+            volatile int dr = static_cast<int>(curr.r) - static_cast<int>(bg.r);
+            volatile int dg = static_cast<int>(curr.g) - static_cast<int>(bg.g);
+            volatile int db = static_cast<int>(curr.b) - static_cast<int>(bg.b);
+            if (dr < 0) dr = -dr;
+            if (dg < 0) dg = -dg;
+            if (db < 0) db = -db;
+
+            volatile int total = dr + dg + db;
+
+            state.input_mask[i]  = (total > int(low_th))  ? 255 : 0;
+            state.marker_mask[i] = (total > int(high_th)) ? 255 : 0;
         }
     }
 }

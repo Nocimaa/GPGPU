@@ -7,6 +7,12 @@ const initialParams = {
   bg_sampling_rate: 500,
   bg_number_frame: 10,
   cpu_simd: true,
+  gpu_diff: true,
+  gpu_hysteresis: true,
+  gpu_morphology: true,
+  gpu_background: true,
+  gpu_overlay: true,
+  kernel_fusion: true,
 };
 
 const backendBaseUrl =
@@ -400,6 +406,15 @@ function App() {
     setDropActive(true);
   };
 
+  const gpuOptions = [
+    { name: "gpu_diff", label: "Diff" },
+    { name: "gpu_hysteresis", label: "Hysteresis" },
+    { name: "gpu_morphology", label: "Morphology" },
+    { name: "gpu_background", label: "Background update" },
+    { name: "gpu_overlay", label: "Overlay" },
+    { name: "kernel_fusion", label: "Kernel fusion" },
+  ];
+
   const handleDragLeave = () => {
     setDropActive(false);
   };
@@ -576,6 +591,21 @@ function App() {
                         SIMD active
                       </label>
                     )}
+                    {mode === "gpu" && (
+                      <div className="checkbox-grid">
+                        {gpuOptions.map(({ name, label }) => (
+                          <label key={name} className="checkbox">
+                            <input
+                              name={name}
+                              type="checkbox"
+                              checked={params[name]}
+                              onChange={handleCheckboxChange}
+                            />
+                            {label}
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="stacked-control">
                     <label>
@@ -711,6 +741,21 @@ function App() {
                       />
                       SIMD active
                     </label>
+                  )}
+                  {mode === "gpu" && (
+                    <div className="checkbox-grid">
+                      {gpuOptions.map(({ name, label }) => (
+                        <label key={name} className="checkbox">
+                          <input
+                            name={name}
+                            type="checkbox"
+                            checked={params[name]}
+                            onChange={handleCheckboxChange}
+                          />
+                          {label}
+                        </label>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>

@@ -3,3 +3,4 @@ backend/_stream_engine.so
 backend/__pycache__/
 backend/.venv/
 frontend/node_modules/
+node_modules/
