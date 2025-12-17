@@ -19,7 +19,8 @@ struct OptimizationConfig
     bool gpu_morphology = false;
     bool gpu_background_update = false;
     bool gpu_overlay = false;
-    bool kernel_fusion = false;
+    bool kernel_fusion = false; // kept for compatibility (used to fuse diff+overlay)
+    bool opt_cpu_simd = false;
 };
 
 struct Timing
@@ -44,10 +45,12 @@ struct ProcessingState
 
     Image<rgb8> d_background;
     Image<rgb8> d_current;
+
     uint8_t* d_input_mask = nullptr;
     uint8_t* d_marker_mask = nullptr;
     uint8_t* d_temp_mask = nullptr;
     uint32_t* d_changed = nullptr;
+
     int frame_counter = 0;
 
     OptimizationConfig config;
@@ -68,34 +71,99 @@ static size_t total_pixels(const ProcessingState& state)
     return static_cast<size_t>(state.width) * static_cast<size_t>(state.height);
 }
 
+// ====================
+// SHARED (CPU/GPU) PRIMITIVES
+// ====================
+
+__host__ __device__ inline int iabs_int(int v) { return v < 0 ? -v : v; }
+
+__host__ __device__ inline void compute_diff_pixel(const rgb8& curr, const rgb8& bg, uint8_t& low_mask, uint8_t& high_mask, uint8_t low_th, uint8_t high_th)
+{
+    const int dr = iabs_int(int(curr.r) - int(bg.r));
+    const int dg = iabs_int(int(curr.g) - int(bg.g));
+    const int db = iabs_int(int(curr.b) - int(bg.b));
+    const int total = dr + dg + db;
+
+    low_mask  = (total > int(low_th))  ? 255 : 0;
+    high_mask = (total > int(high_th)) ? 255 : 0;
+}
+
+__host__ __device__
+inline void overlay_pixel(rgb8& p, uint8_t mask)
+{
+    if (mask == 255)
+    {
+        p.r = 255;
+        p.g = 0;
+        p.b = 0;
+    }
+}
+
+__host__ __device__ inline bool hysteresis_activate(const uint8_t* motion, const uint8_t* low, int x, int y, int w, int h)
+{
+    const int idx = y * w + x;
+    if (low[idx] == 0) return false;
+
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            if (dx == 0 && dy == 0) continue;
+            const int nx = x + dx;
+            const int ny = y + dy;
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+            if (motion[ny * w + nx] == 255) return true;
+        }
+    }
+    return false;
+}
+
+__host__ __device__ inline bool erosion_test(const uint8_t* src, int x, int y, int w, int h, int radius)
+{
+    for (int dy = -radius; dy <= radius; ++dy)
+    {
+        for (int dx = -radius; dx <= radius; ++dx)
+        {
+            const int nx = x + dx;
+            const int ny = y + dy;
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h) return false;
+            if (src[ny * w + nx] != 255) return false;
+        }
+    }
+    return true;
+}
+
+__host__ __device__ inline bool dilation_test(const uint8_t* src, int x, int y, int w, int h, int radius)
+{
+    for (int dy = -radius; dy <= radius; ++dy)
+    {
+        for (int dx = -radius; dx <= radius; ++dx)
+        {
+            const int nx = x + dx;
+            const int ny = y + dy;
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+            if (src[ny * w + nx] == 255) return true;
+        }
+    }
+    return false;
+}
+
+// ====================
+// DEVICE BUFFER MGMT
+// ====================
 static void reset_device_buffers(ProcessingState& state)
 {
-    if (state.d_input_mask)
-    {
-        cudaFree(state.d_input_mask);
-        state.d_input_mask = nullptr;
-    }
-    if (state.d_marker_mask)
-    {
-        cudaFree(state.d_marker_mask);
-        state.d_marker_mask = nullptr;
-    }
-    if (state.d_temp_mask)
-    {
-        cudaFree(state.d_temp_mask);
-        state.d_temp_mask = nullptr;
-    }
-    if (state.d_changed)
-    {
-        cudaFree(state.d_changed);
-        state.d_changed = nullptr;
-    }
+    if (state.d_input_mask)   { cudaFree(state.d_input_mask);   state.d_input_mask = nullptr; }
+    if (state.d_marker_mask)  { cudaFree(state.d_marker_mask);  state.d_marker_mask = nullptr; }
+    if (state.d_temp_mask)    { cudaFree(state.d_temp_mask);    state.d_temp_mask = nullptr; }
+    if (state.d_changed)      { cudaFree(state.d_changed);      state.d_changed = nullptr; }
 }
 
 static void init_state(ProcessingState& state, uint8_t* buffer, int width, int height, int stride)
 {
     state.width = width;
     state.height = height;
+
     const size_t total = total_pixels(state);
 
     state.background.resize(total);
@@ -104,6 +172,7 @@ static void init_state(ProcessingState& state, uint8_t* buffer, int width, int h
     state.motion_mask.resize(total);
     state.temp_mask.resize(total);
 
+    // init background from first frame
     for (int y = 0; y < height; ++y)
     {
         auto* dst = state.background.data() + y * width;
@@ -112,12 +181,13 @@ static void init_state(ProcessingState& state, uint8_t* buffer, int width, int h
     }
 
     state.d_background = Image<rgb8>(width, height, true);
-    state.d_current = Image<rgb8>(width, height, true);
+    state.d_current    = Image<rgb8>(width, height, true);
+
     reset_device_buffers(state);
-    cudaMalloc(&state.d_input_mask, width * height);
+    cudaMalloc(&state.d_input_mask,  width * height);
     cudaMalloc(&state.d_marker_mask, width * height);
-    cudaMalloc(&state.d_temp_mask, width * height);
-    cudaMalloc(&state.d_changed, sizeof(uint32_t));
+    cudaMalloc(&state.d_temp_mask,   width * height);
+    cudaMalloc(&state.d_changed,     sizeof(uint32_t));
 
     cudaMemcpy2D(state.d_background.buffer,
                  state.d_background.stride,
@@ -146,186 +216,119 @@ static bool should_update_background(const ProcessingState& state)
 
 static void compute_diff_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 {
-    const int width = state.width;
-    const int height = state.height;
-    const int low_threshold = g_params.th_low;
-    const int high_threshold = g_params.th_high;
-    for (int y = 0; y < height; ++y)
+    const int w = state.width;
+    const int h = state.height;
+
+    const uint8_t low_th  = static_cast<uint8_t>(std::clamp(g_params.th_low, 0, 255));
+    const uint8_t high_th = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));
+
+    for (int y = 0; y < h; ++y)
     {
         auto* curr_row = reinterpret_cast<rgb8*>((std::byte*)buffer + y * stride);
-        for (int x = 0; x < width; ++x)
+        for (int x = 0; x < w; ++x)
         {
-            const int index = y * width + x;
-            const rgb8 curr = curr_row[x];
-            const rgb8 bg = state.background[index];
-            int diff_r = curr.r - bg.r;
-            if (diff_r < 0)
-                diff_r = -diff_r;
-            int diff_g = curr.g - bg.g;
-            if (diff_g < 0)
-                diff_g = -diff_g;
-            int diff_b = curr.b - bg.b;
-            if (diff_b < 0)
-                diff_b = -diff_b;
-            int total_diff = diff_r + diff_g + diff_b;
-            state.input_mask[index] = total_diff > low_threshold ? 255 : 0;
-            state.marker_mask[index] = total_diff > high_threshold ? 255 : 0;
+            const int i = y * w + x;
+            compute_diff_pixel(curr_row[x],
+                               state.background[i],
+                               state.input_mask[i],
+                               state.marker_mask[i],
+                               low_th,
+                               high_th);
         }
     }
 }
 
 static void hysteresis_cpu(ProcessingState& state)
 {
+    // start from marker_mask
     std::copy(state.marker_mask.begin(), state.marker_mask.end(), state.motion_mask.begin());
+
+    const int w = state.width;
+    const int h = state.height;
+
     bool changed;
-    const int width = state.width;
-    const int height = state.height;
     do
     {
         changed = false;
-        for (int y = 0; y < height; ++y)
+        for (int y = 0; y < h; ++y)
         {
-            for (int x = 0; x < width; ++x)
+            for (int x = 0; x < w; ++x)
             {
-                const int index = y * width + x;
-                if (state.motion_mask[index] != 0 || state.input_mask[index] == 0)
-                    continue;
-                bool neighbor_active = false;
-                for (int dy = -1; dy <= 1 && !neighbor_active; ++dy)
+                const int i = y * w + x;
+                if (state.motion_mask[i] != 0) continue;   // already active
+                if (state.input_mask[i] == 0) continue;    // not even in low mask
+
+                if (hysteresis_activate(state.motion_mask.data(), state.input_mask.data(), x, y, w, h))
                 {
-                    for (int dx = -1; dx <= 1; ++dx)
-                    {
-                        if (dy == 0 && dx == 0)
-                            continue;
-                        int ny = y + dy;
-                        int nx = x + dx;
-                        if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-                            continue;
-                        if (state.motion_mask[ny * width + nx] != 0)
-                        {
-                            neighbor_active = true;
-                            break;
-                        }
-                    }
-                }
-                if (neighbor_active)
-                {
-                    state.motion_mask[index] = 255;
+                    state.motion_mask[i] = 255;
                     changed = true;
                 }
             }
         }
     } while (changed);
+
     sync_motion_to_marker(state);
 }
 
 static void morphology_cpu(ProcessingState& state)
 {
-    const int width = state.width;
-    const int height = state.height;
-    const size_t total = total_pixels(state);
-    if (state.temp_mask.size() < total)
-        state.temp_mask.resize(total);
-    const uint8_t* src = state.motion_mask.data();
-    uint8_t* temp = state.temp_mask.data();
+    const int w = state.width;
+    const int h = state.height;
 
     const int opening = std::max(1, g_params.opening_size);
-    const int radius = opening / 2;
+    const int radius  = opening / 2;
 
-    for (int y = 0; y < height; ++y)
-    {
-        for (int x = 0; x < width; ++x)
-        {
-            const int index = y * width + x;
-            bool keep = true;
-            for (int dy = -radius; dy <= radius && keep; ++dy)
-            {
-                for (int dx = -radius; dx <= radius; ++dx)
-                {
-                    int ny = y + dy;
-                    int nx = x + dx;
-                    if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-                    {
-                        keep = false;
-                        break;
-                    }
-                    if (src[ny * width + nx] != 255)
-                    {
-                        keep = false;
-                        break;
-                    }
-                }
-            }
-            temp[index] = keep ? 255 : 0;
-        }
-    }
+    const uint8_t* src = state.motion_mask.data();
+    uint8_t* tmp = state.temp_mask.data();
 
-    for (int y = 0; y < height; ++y)
-    {
-        for (int x = 0; x < width; ++x)
-        {
-            const int index = y * width + x;
-            bool any = false;
-            for (int dy = -radius; dy <= radius && !any; ++dy)
-            {
-                for (int dx = -radius; dx <= radius && !any; ++dx)
-                {
-                    int ny = y + dy;
-                    int nx = x + dx;
-                    if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-                        continue;
-                    if (temp[ny * width + nx] == 255)
-                    {
-                        any = true;
-                        break;
-                    }
-                }
-            }
-            state.motion_mask[index] = any ? 255 : 0;
-        }
-    }
+    // Erosion
+    for (int y = 0; y < h; ++y)
+        for (int x = 0; x < w; ++x)
+            tmp[y * w + x] = erosion_test(src, x, y, w, h, radius) ? 255 : 0;
+
+    // Dilation
+    for (int y = 0; y < h; ++y)
+        for (int x = 0; x < w; ++x)
+            state.motion_mask[y * w + x] = dilation_test(tmp, x, y, w, h, radius) ? 255 : 0;
+
     sync_motion_to_marker(state);
 }
 
 static void update_background_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 {
-    const int width = state.width;
-    const int height = state.height;
-    const int blend_den = std::max(1, g_params.bg_number_frame);
-    for (int y = 0; y < height; ++y)
+    const int w = state.width;
+    const int h = state.height;
+    const int den = std::max(1, g_params.bg_number_frame);
+
+    for (int y = 0; y < h; ++y)
     {
-        const int row_offset = y * width;
         auto* curr_row = reinterpret_cast<rgb8*>((std::byte*)buffer + y * stride);
-        for (int x = 0; x < width; ++x)
+        for (int x = 0; x < w; ++x)
         {
-            const int index = row_offset + x;
-            if (state.motion_mask[index] == 0)
-            {
-                rgb8& bg = state.background[index];
-                const rgb8 curr = curr_row[x];
-                bg.r = (bg.r * (blend_den - 1) + curr.r) / blend_den;
-                bg.g = (bg.g * (blend_den - 1) + curr.g) / blend_den;
-                bg.b = (bg.b * (blend_den - 1) + curr.b) / blend_den;
-            }
+            const int i = y * w + x;
+            if (state.motion_mask[i] != 0) continue;
+
+            rgb8& bg = state.background[i];
+            const rgb8 curr = curr_row[x];
+
+            bg.r = (bg.r * (den - 1) + curr.r) / den;
+            bg.g = (bg.g * (den - 1) + curr.g) / den;
+            bg.b = (bg.b * (den - 1) + curr.b) / den;
         }
     }
 }
 
 static void overlay_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 {
-    const int width = state.width;
-    const int height = state.height;
-    for (int y = 0; y < height; ++y)
+    const int w = state.width;
+    const int h = state.height;
+
+    for (int y = 0; y < h; ++y)
     {
         auto* curr_row = reinterpret_cast<rgb8*>((std::byte*)buffer + y * stride);
-        for (int x = 0; x < width; ++x)
+        for (int x = 0; x < w; ++x)
         {
-            if (state.motion_mask[y * width + x] == 255)
-            {
-                curr_row[x].r = 255;
-                curr_row[x].g = 0;
-                curr_row[x].b = 0;
-            }
+            overlay_pixel(curr_row[x], state.motion_mask[y * w + x]);
         }
     }
 }
@@ -333,240 +336,119 @@ static void overlay_cpu(ProcessingState& state, uint8_t* buffer, int stride)
 // ====================
 // CUDA KERNELS
 // ====================
-__global__ void hysteresis_propagate(const uint8_t* mask_in,
-                                     uint8_t* mask_out,
-                                     const uint8_t* low_mask,
-                                     int width,
-                                     int height,
-                                     uint32_t* changed)
+
+__global__ void diff_kernel(ImageView<rgb8> curr, ImageView<rgb8> bg, ImageView<uint8_t> low_mask, ImageView<uint8_t> high_mask, bool do_overlay, int width, int height)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= width || y >= height) return;
 
-    const int index = y * width + x;
-    const uint8_t current = mask_in[index];
-    if (current == 255)
+    auto* curr_row  = (rgb8*)((std::byte*)curr.buffer + y * curr.stride);
+    auto* bg_row    = (rgb8*)((std::byte*)bg.buffer + y * bg.stride);
+    auto* low_row   = (uint8_t*)((std::byte*)low_mask.buffer + y * low_mask.stride);
+    auto* high_row  = (uint8_t*)((std::byte*)high_mask.buffer + y * high_mask.stride);
+
+    uint8_t l = 0, hmask = 0;
+    compute_diff_pixel(curr_row[x], bg_row[x], l, hmask, c_low_threshold, c_high_threshold);
+
+    low_row[x]  = l;
+    high_row[x] = hmask;
+
+    if (do_overlay && hmask == 255)
     {
-        mask_out[index] = 255;
+        overlay_pixel(curr_row[x], 255);
+    }
+}
+
+__global__ void hysteresis_propagate_kernel(const uint8_t* motion_in, uint8_t* motion_out, const uint8_t* low_mask, int width, int height, uint32_t* changed)
+{
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= width || y >= height) return;
+
+    const int idx = y * width + x;
+
+    if (motion_in[idx] == 255)
+    {
+        motion_out[idx] = 255;
+        return;
+    }
+    if (low_mask[idx] == 0)
+    {
+        motion_out[idx] = 0;
         return;
     }
 
-    if (low_mask[index] == 0)
+    if (hysteresis_activate(motion_in, low_mask, x, y, width, height))
     {
-        mask_out[index] = 0;
-        return;
-    }
-
-    bool neighbor_active = false;
-    for (int dy = -1; dy <= 1 && !neighbor_active; ++dy)
-    {
-        for (int dx = -1; dx <= 1 && !neighbor_active; ++dx)
-        {
-            if (dy == 0 && dx == 0)
-                continue;
-            int ny = y + dy;
-            int nx = x + dx;
-            if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-                continue;
-            neighbor_active = (mask_in[ny * width + nx] == 255);
-        }
-    }
-
-    if (neighbor_active)
-    {
-        mask_out[index] = 255;
+        motion_out[idx] = 255;
         atomicExch(changed, 1u);
     }
     else
     {
-        mask_out[index] = 0;
+        motion_out[idx] = 0;
     }
 }
 
-__global__ void erosion_kernel(uint8_t* src, uint8_t* dst, int width, int height, int radius)
+__global__ void erosion_kernel(const uint8_t* src, uint8_t* dst, int w, int h, int radius)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
-
-    bool keep = true;
-            for (int dy = -radius; dy <= radius && keep; ++dy)
-            {
-                for (int dx = -radius; dx <= radius; ++dx)
-                {
-                    int ny = y + dy;
-                    int nx = x + dx;
-            if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-            {
-                keep = false;
-                break;
-            }
-            if (src[ny * width + nx] != 255)
-            {
-                keep = false;
-                break;
-            }
-        }
-    }
-    dst[y * width + x] = keep ? 255 : 0;
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= w || y >= h) return;
+    dst[y * w + x] = erosion_test(src, x, y, w, h, radius) ? 255 : 0;
 }
 
-__global__ void dilation_kernel(uint8_t* src, uint8_t* dst, int width, int height, int radius)
+__global__ void dilation_kernel(const uint8_t* src, uint8_t* dst, int w, int h, int radius)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
-
-    bool any = false;
-            for (int dy = -radius; dy <= radius && !any; ++dy)
-            {
-                for (int dx = -radius; dx <= radius && !any; ++dx)
-                {
-            int ny = y + dy;
-            int nx = x + dx;
-            if (ny < 0 || ny >= height || nx < 0 || nx >= width)
-                continue;
-            if (src[ny * width + nx] == 255)
-            {
-                any = true;
-            }
-        }
-    }
-    dst[y * width + x] = any ? 255 : 0;
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= w || y >= h) return;
+    dst[y * w + x] = dilation_test(src, x, y, w, h, radius) ? 255 : 0;
 }
 
-__global__ void update_background_kernel(ImageView<rgb8> current,
-                                         ImageView<rgb8> background,
-                                         ImageView<uint8_t> mask,
-                                         int width,
-                                         int height,
-                                         int blend_num,
-                                         int blend_den)
+__global__ void update_background_kernel(ImageView<rgb8> current, ImageView<rgb8> background, ImageView<uint8_t> motion_mask, int width, int height, int blend_num, int blend_den)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= width || y >= height) return;
 
     auto* curr_row = (rgb8*)((std::byte*)current.buffer + y * current.stride);
-    auto* bg_row = (rgb8*)((std::byte*)background.buffer + y * background.stride);
-    auto* mask_row = (uint8_t*)((std::byte*)mask.buffer + y * mask.stride);
+    auto* bg_row   = (rgb8*)((std::byte*)background.buffer + y * background.stride);
+    auto* m_row    = (uint8_t*)((std::byte*)motion_mask.buffer + y * motion_mask.stride);
 
-    if (mask_row[x] != 0)
-        return;
+    if (m_row[x] != 0) return;
 
-    rgb8& bg_pixel = bg_row[x];
-    const rgb8 curr_pixel = curr_row[x];
-    bg_pixel.r = (bg_pixel.r * (blend_den - blend_num) + curr_pixel.r * blend_num) / blend_den;
-    bg_pixel.g = (bg_pixel.g * (blend_den - blend_num) + curr_pixel.g * blend_num) / blend_den;
-    bg_pixel.b = (bg_pixel.b * (blend_den - blend_num) + curr_pixel.b * blend_num) / blend_den;
+    rgb8& bgp = bg_row[x];
+    const rgb8 cp = curr_row[x];
+
+    bgp.r = (bgp.r * (blend_den - blend_num) + cp.r * blend_num) / blend_den;
+    bgp.g = (bgp.g * (blend_den - blend_num) + cp.g * blend_num) / blend_den;
+    bgp.b = (bgp.b * (blend_den - blend_num) + cp.b * blend_num) / blend_den;
 }
 
-__global__ void diff_mask_kernel(ImageView<rgb8> curr,
-                                 ImageView<rgb8> background,
-                                 ImageView<uint8_t> input_mask,
-                                 ImageView<uint8_t> marker_mask,
-                                 int width,
-                                 int height)
+__global__ void overlay_kernel(ImageView<rgb8> current, ImageView<uint8_t> motion_mask, int width, int height)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
-
-    auto* curr_row = (rgb8*)((std::byte*)curr.buffer + y * curr.stride);
-    auto* bg_row = (rgb8*)((std::byte*)background.buffer + y * background.stride);
-    auto* input_row = (uint8_t*)((std::byte*)input_mask.buffer + y * input_mask.stride);
-    auto* marker_row = (uint8_t*)((std::byte*)marker_mask.buffer + y * marker_mask.stride);
-
-    const rgb8 curr_pixel = curr_row[x];
-    const rgb8 bg_pixel = bg_row[x];
-
-    int diff_r = curr_pixel.r - bg_pixel.r;
-    if (diff_r < 0)
-        diff_r = -diff_r;
-    int diff_g = curr_pixel.g - bg_pixel.g;
-    if (diff_g < 0)
-        diff_g = -diff_g;
-    int diff_b = curr_pixel.b - bg_pixel.b;
-    if (diff_b < 0)
-        diff_b = -diff_b;
-    int total_diff = diff_r + diff_g + diff_b;
-
-    input_row[x] = total_diff > c_low_threshold ? 255 : 0;
-    marker_row[x] = total_diff > c_high_threshold ? 255 : 0;
-}
-
-__global__ void diff_overlay_kernel(ImageView<rgb8> curr,
-                                    ImageView<rgb8> background,
-                                    ImageView<uint8_t> input_mask,
-                                    ImageView<uint8_t> marker_mask,
-                                    int width,
-                                    int height)
-{
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
-
-    auto* curr_row = (rgb8*)((std::byte*)curr.buffer + y * curr.stride);
-    auto* bg_row = (rgb8*)((std::byte*)background.buffer + y * background.stride);
-    auto* input_row = (uint8_t*)((std::byte*)input_mask.buffer + y * input_mask.stride);
-    auto* marker_row = (uint8_t*)((std::byte*)marker_mask.buffer + y * marker_mask.stride);
-
-    const rgb8 curr_pixel = curr_row[x];
-    const rgb8 bg_pixel = bg_row[x];
-
-    int diff_r = curr_pixel.r - bg_pixel.r;
-    if (diff_r < 0)
-        diff_r = -diff_r;
-    int diff_g = curr_pixel.g - bg_pixel.g;
-    if (diff_g < 0)
-        diff_g = -diff_g;
-    int diff_b = curr_pixel.b - bg_pixel.b;
-    if (diff_b < 0)
-        diff_b = -diff_b;
-    int total_diff = diff_r + diff_g + diff_b;
-
-    input_row[x] = total_diff > c_low_threshold ? 255 : 0;
-    marker_row[x] = total_diff > c_high_threshold ? 255 : 0;
-
-    if (marker_row[x] == 255)
-    {
-        curr_row[x].r = 255;
-        curr_row[x].g = 0;
-        curr_row[x].b = 0;
-    }
-}
-
-__global__ void overlay_kernel(ImageView<rgb8> current,
-                               ImageView<uint8_t> mask,
-                               int width,
-                               int height)
-{
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height)
-        return;
+    const int x = blockIdx.x * blockDim.x + threadIdx.x;
+    const int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= width || y >= height) return;
 
     auto* curr_row = (rgb8*)((std::byte*)current.buffer + y * current.stride);
-    auto* mask_row = (uint8_t*)((std::byte*)mask.buffer + y * mask.stride);
+    auto* m_row    = (uint8_t*)((std::byte*)motion_mask.buffer + y * motion_mask.stride);
 
-    if (mask_row[x] == 255)
-    {
-        curr_row[x].r = 255;
-        curr_row[x].g = 0;
-        curr_row[x].b = 0;
-    }
+    overlay_pixel(curr_row[x], m_row[x]);
 }
 
 // ====================
-// GPU WRAPPERS
+// GPU HELPERS
 // ====================
+static dim3 default_block() { return dim3(16, 16); }
+
+static dim3 default_grid(int w, int h, dim3 block)
+{
+    return dim3((w + int(block.x) - 1) / int(block.x),
+                (h + int(block.y) - 1) / int(block.y));
+}
+
 static void upload_current_frame(ProcessingState& state, uint8_t* buffer, int stride)
 {
     cudaMemcpy2D(state.d_current.buffer,
@@ -581,14 +463,14 @@ static void upload_current_frame(ProcessingState& state, uint8_t* buffer, int st
 static void download_diff_masks_from_device(ProcessingState& state)
 {
     const size_t total = total_pixels(state);
-    cudaMemcpy(state.input_mask.data(), state.d_input_mask, total, cudaMemcpyDeviceToHost);
+    cudaMemcpy(state.input_mask.data(),  state.d_input_mask,  total, cudaMemcpyDeviceToHost);
     cudaMemcpy(state.marker_mask.data(), state.d_marker_mask, total, cudaMemcpyDeviceToHost);
 }
 
 static void upload_diff_masks_to_device(ProcessingState& state)
 {
     const size_t total = total_pixels(state);
-    cudaMemcpy(state.d_input_mask, state.input_mask.data(), total, cudaMemcpyHostToDevice);
+    cudaMemcpy(state.d_input_mask,  state.input_mask.data(),  total, cudaMemcpyHostToDevice);
     cudaMemcpy(state.d_marker_mask, state.marker_mask.data(), total, cudaMemcpyHostToDevice);
 }
 
@@ -596,7 +478,7 @@ static void download_motion_mask_from_device(ProcessingState& state)
 {
     const size_t total = total_pixels(state);
     cudaMemcpy(state.motion_mask.data(), state.d_marker_mask, total, cudaMemcpyDeviceToHost);
-    std::copy(state.motion_mask.begin(), state.motion_mask.end(), state.marker_mask.begin());
+    sync_motion_to_marker(state);
 }
 
 static void upload_motion_mask_to_device(ProcessingState& state)
@@ -605,87 +487,78 @@ static void upload_motion_mask_to_device(ProcessingState& state)
     cudaMemcpy(state.d_marker_mask, state.motion_mask.data(), total, cudaMemcpyHostToDevice);
 }
 
-static void compute_diff_gpu(ProcessingState& state, uint8_t* buffer, int stride)
+// ====================
+// GPU WRAPPERS
+// ====================
+static void compute_diff_gpu(ProcessingState& state, uint8_t* buffer, int stride, bool fuse_overlay)
 {
     upload_current_frame(state, buffer, stride);
 
-    const dim3 block(16, 16);
-    const dim3 grid((state.width + block.x - 1) / block.x,
-                    (state.height + block.y - 1) / block.y);
-    if (state.config.kernel_fusion && state.config.gpu_overlay)
-    {
-        diff_overlay_kernel<<<grid, block>>>(
-            ImageView<rgb8>{state.d_current.buffer, state.width, state.height, state.d_current.stride},
-            ImageView<rgb8>{state.d_background.buffer, state.width, state.height, state.d_background.stride},
-            ImageView<uint8_t>{state.d_input_mask, state.width, state.height, state.width},
-            ImageView<uint8_t>{state.d_marker_mask, state.width, state.height, state.width},
-            state.width,
-            state.height);
-    }
-    else
-    {
-        diff_mask_kernel<<<grid, block>>>(
-            ImageView<rgb8>{state.d_current.buffer, state.width, state.height, state.d_current.stride},
-            ImageView<rgb8>{state.d_background.buffer, state.width, state.height, state.d_background.stride},
-            ImageView<uint8_t>{state.d_input_mask, state.width, state.height, state.width},
-            ImageView<uint8_t>{state.d_marker_mask, state.width, state.height, state.width},
-            state.width,
-            state.height);
-    }
+    const dim3 block = default_block();
+    const dim3 grid  = default_grid(state.width, state.height, block);
+
+    diff_kernel<<<grid, block>>>(
+        ImageView<rgb8>{state.d_current.buffer, state.width, state.height, state.d_current.stride},
+        ImageView<rgb8>{state.d_background.buffer, state.width, state.height, state.d_background.stride},
+        ImageView<uint8_t>{state.d_input_mask, state.width, state.height, state.width},
+        ImageView<uint8_t>{state.d_marker_mask, state.width, state.height, state.width},
+        fuse_overlay,
+        state.width,
+        state.height);
 }
 
 static void hysteresis_gpu(ProcessingState& state)
 {
-    const int width = state.width;
-    const int height = state.height;
-    const dim3 block(16, 16);
-    const dim3 grid((width + block.x - 1) / block.x,
-                    (height + block.y - 1) / block.y);
+    const int w = state.width;
+    const int h = state.height;
 
-    uint32_t host_changed = 0;
+    const dim3 block = default_block();
+    const dim3 grid  = default_grid(w, h, block);
+
     const int max_iter = 10;
     for (int iter = 0; iter < max_iter; ++iter)
     {
-        host_changed = 0;
         cudaMemset(state.d_changed, 0, sizeof(uint32_t));
-        hysteresis_propagate<<<grid, block>>>(state.d_marker_mask,
-                                               state.d_temp_mask,
-                                               state.d_input_mask,
-                                               width,
-                                               height,
-                                               state.d_changed);
+
+        hysteresis_propagate_kernel<<<grid, block>>>(
+            state.d_marker_mask,
+            state.d_temp_mask,
+            state.d_input_mask,
+            w, h,
+            state.d_changed);
+
+        uint32_t host_changed = 0;
         cudaMemcpy(&host_changed, state.d_changed, sizeof(uint32_t), cudaMemcpyDeviceToHost);
-        cudaMemcpy(state.d_marker_mask, state.d_temp_mask, width * height, cudaMemcpyDeviceToDevice);
+        cudaMemcpy(state.d_marker_mask, state.d_temp_mask, w * h, cudaMemcpyDeviceToDevice);
+
         if (host_changed == 0)
             break;
     }
-    download_motion_mask_from_device(state);
 }
 
 static void morphology_gpu(ProcessingState& state)
 {
-    const int width = state.width;
-    const int height = state.height;
-    const size_t total = total_pixels(state);
+    const int w = state.width;
+    const int h = state.height;
 
-    const dim3 block(16, 16);
-    const dim3 grid((width + block.x - 1) / block.x,
-                    (height + block.y - 1) / block.y);
+    const dim3 block = default_block();
+    const dim3 grid  = default_grid(w, h, block);
+
     const int opening = std::max(1, g_params.opening_size);
-    const int radius = opening / 2;
-    erosion_kernel<<<grid, block>>>(state.d_marker_mask, state.d_temp_mask, width, height, radius);
-    dilation_kernel<<<grid, block>>>(state.d_temp_mask, state.d_marker_mask, width, height, radius);
+    const int radius  = opening / 2;
 
-    cudaMemcpy(state.motion_mask.data(), state.d_marker_mask, total, cudaMemcpyDeviceToHost);
-    sync_motion_to_marker(state);
+    erosion_kernel<<<grid, block>>>(state.d_marker_mask, state.d_temp_mask, w, h, radius);
+    dilation_kernel<<<grid, block>>>(state.d_temp_mask, state.d_marker_mask, w, h, radius);
+
 }
 
 static void update_background_gpu(ProcessingState& state)
 {
-    const dim3 block(16, 16);
-    const dim3 grid((state.width + block.x - 1) / block.x,
-                    (state.height + block.y - 1) / block.y);
-    const int blend_den = std::max(1, g_params.bg_number_frame);
+    const dim3 block = default_block();
+    const dim3 grid  = default_grid(state.width, state.height, block);
+
+    const int den = std::max(1, g_params.bg_number_frame);
+
     update_background_kernel<<<grid, block>>>(
         ImageView<rgb8>{state.d_current.buffer, state.width, state.height, state.d_current.stride},
         ImageView<rgb8>{state.d_background.buffer, state.width, state.height, state.d_background.stride},
@@ -693,8 +566,9 @@ static void update_background_gpu(ProcessingState& state)
         state.width,
         state.height,
         1,
-        blend_den);
+        den);
 
+    // keep host background in sync (like your original code)
     cudaMemcpy2D(state.background.data(),
                  state.width * sizeof(rgb8),
                  state.d_background.buffer,
@@ -706,14 +580,41 @@ static void update_background_gpu(ProcessingState& state)
 
 static void overlay_gpu(ProcessingState& state)
 {
-    const dim3 block(16, 16);
-    const dim3 grid((state.width + block.x - 1) / block.x,
-                    (state.height + block.y - 1) / block.y);
+    const dim3 block = default_block();
+    const dim3 grid  = default_grid(state.width, state.height, block);
+
     overlay_kernel<<<grid, block>>>(
         ImageView<rgb8>{state.d_current.buffer, state.width, state.height, state.d_current.stride},
         ImageView<uint8_t>{state.d_marker_mask, state.width, state.height, state.width},
         state.width,
         state.height);
+}
+
+template <typename CpuFn, typename GpuFn>
+static void run_processing_stage(bool use_gpu, CpuFn&& cpu_fn, GpuFn&& gpu_fn, float& timing)
+{
+    const auto start = Clock::now();
+    if (use_gpu)
+        gpu_fn();
+    else
+        cpu_fn();
+    timing = DurationMs(Clock::now() - start).count();
+}
+
+static void sync_diff_and_hysteresis_masks(ProcessingState& state, bool diff_gpu, bool hyst_gpu)
+{
+    if (diff_gpu && !hyst_gpu)
+        download_diff_masks_from_device(state);
+    else if (!diff_gpu && hyst_gpu)
+        upload_diff_masks_to_device(state);
+}
+
+static void sync_hysteresis_and_morph_masks(ProcessingState& state, bool hyst_gpu, bool morph_gpu)
+{
+    if (hyst_gpu && !morph_gpu)
+        download_motion_mask_from_device(state);
+    else if (!hyst_gpu && morph_gpu)
+        upload_motion_mask_to_device(state);
 }
 
 // ====================
@@ -728,86 +629,62 @@ static void process_frame(ProcessingState& state, uint8_t* buffer, int width, in
     }
 
     const auto& cfg = state.config;
-    const bool run_gpu_diff = cfg.use_gpu && cfg.gpu_diff;
-    const bool run_gpu_hyst = cfg.use_gpu && cfg.gpu_hysteresis;
-    const bool run_gpu_morph = cfg.use_gpu && cfg.gpu_morphology;
-    const bool run_gpu_bg = cfg.use_gpu && cfg.gpu_background_update;
+
+    const bool run_gpu_diff    = cfg.use_gpu && cfg.gpu_diff;
+    const bool run_gpu_hyst    = cfg.use_gpu && cfg.gpu_hysteresis;
+    const bool run_gpu_morph   = cfg.use_gpu && cfg.gpu_morphology;
+    const bool run_gpu_bg      = cfg.use_gpu && cfg.gpu_background_update;
     const bool run_gpu_overlay = cfg.use_gpu && cfg.gpu_overlay;
 
-    auto start = Clock::now();
-    if (run_gpu_diff)
-    {
-        compute_diff_gpu(state, buffer, stride);
-    }
-    else
-    {
-        compute_diff_cpu(state, buffer, stride);
-    }
-    state.timing.diff_ms = DurationMs(Clock::now() - start).count();
+    const bool fuse_overlay_in_diff = (run_gpu_diff && run_gpu_overlay && cfg.kernel_fusion);
 
-    if (run_gpu_diff && !run_gpu_hyst)
-        download_diff_masks_from_device(state);
-    if (!run_gpu_diff && run_gpu_hyst)
-        upload_diff_masks_to_device(state);
+    auto run_diff_cpu = [&]() { compute_diff_cpu(state, buffer, stride); };
+    auto run_diff_gpu = [&]() { compute_diff_gpu(state, buffer, stride, fuse_overlay_in_diff); };
+    run_processing_stage(run_gpu_diff, run_diff_cpu, run_diff_gpu, state.timing.diff_ms);
 
-    start = Clock::now();
-    if (run_gpu_hyst)
-    {
-        if (!run_gpu_diff)
-            upload_diff_masks_to_device(state);
-        hysteresis_gpu(state);
-    }
-    else
-    {
-        hysteresis_cpu(state);
-    }
-    state.timing.hyst_ms = DurationMs(Clock::now() - start).count();
+    sync_diff_and_hysteresis_masks(state, run_gpu_diff, run_gpu_hyst);
 
-    if (run_gpu_hyst && !run_gpu_morph)
-        download_motion_mask_from_device(state);
-    if (!run_gpu_hyst && run_gpu_morph)
-        upload_motion_mask_to_device(state);
+    auto run_hyst_cpu = [&]() { hysteresis_cpu(state); };
+    auto run_hyst_gpu = [&]() { hysteresis_gpu(state); };
+    run_processing_stage(run_gpu_hyst, run_hyst_cpu, run_hyst_gpu, state.timing.hyst_ms);
 
-    start = Clock::now();
-    if (run_gpu_morph)
-    {
-        if (!run_gpu_hyst)
-            upload_motion_mask_to_device(state);
-        morphology_gpu(state);
-    }
-    else
-    {
-        morphology_cpu(state);
-    }
-    state.timing.morph_ms = DurationMs(Clock::now() - start).count();
+    sync_hysteresis_and_morph_masks(state, run_gpu_hyst, run_gpu_morph);
 
-    if (!run_gpu_morph)
-        sync_motion_to_marker(state);
+    auto run_morph_cpu = [&]() { morphology_cpu(state); };
+    auto run_morph_gpu = [&]() { morphology_gpu(state); };
+    run_processing_stage(run_gpu_morph, run_morph_cpu, run_morph_gpu, state.timing.morph_ms);
 
     const bool do_bg_update = should_update_background(state);
-    start = Clock::now();
+    if (run_gpu_morph)
+    {
+        const bool needs_host_for_bg = do_bg_update && !run_gpu_bg;
+        const bool needs_host_for_overlay = !run_gpu_overlay;
+        if (needs_host_for_bg || needs_host_for_overlay)
+            download_motion_mask_from_device(state);
+    }
+
     if (do_bg_update)
     {
-        if (run_gpu_bg)
-        {
-            upload_current_frame(state, buffer, stride);
-            if (!run_gpu_morph)
-                upload_motion_mask_to_device(state);
+        auto run_bg_cpu = [&]() { update_background_cpu(state, buffer, stride); };
+        auto run_bg_gpu = [&]() {
+            if (!run_gpu_diff) upload_current_frame(state, buffer, stride);
+            if (!run_gpu_morph) upload_motion_mask_to_device(state);
             update_background_gpu(state);
-        }
-        else
-        {
-            update_background_cpu(state, buffer, stride);
-        }
+        };
+        run_processing_stage(run_gpu_bg, run_bg_cpu, run_bg_gpu, state.timing.update_ms);
     }
-    state.timing.update_ms = DurationMs(Clock::now() - start).count();
+    else
+    {
+        state.timing.update_ms = 0.f;
+    }
 
     if (run_gpu_overlay)
     {
-        upload_current_frame(state, buffer, stride);
-        if (!run_gpu_morph)
-            upload_motion_mask_to_device(state);
+        if (!run_gpu_diff) upload_current_frame(state, buffer, stride);
+        if (!run_gpu_morph) upload_motion_mask_to_device(state);
+
         overlay_gpu(state);
+
         cudaMemcpy2D(buffer,
                      stride,
                      state.d_current.buffer,
@@ -820,24 +697,34 @@ static void process_frame(ProcessingState& state, uint8_t* buffer, int width, in
     {
         overlay_cpu(state, buffer, stride);
     }
+
     state.frame_counter++;
 }
 
+// ====================
+// C API
+// ====================
 extern "C" void cpt_init(Parameters* params)
 {
     g_params = *params;
+
     reset_device_buffers(g_state);
     g_state = ProcessingState();
+
     g_state.config.use_gpu = (params->device == e_device_t::GPU);
-    g_state.config.gpu_diff = params->opt_gpu_diff && g_state.config.use_gpu;
-    g_state.config.gpu_hysteresis = params->opt_gpu_hysteresis && g_state.config.use_gpu;
-    g_state.config.gpu_morphology = params->opt_gpu_morphology && g_state.config.use_gpu;
+
+    g_state.config.gpu_diff              = params->opt_gpu_diff       && g_state.config.use_gpu;
+    g_state.config.gpu_hysteresis        = params->opt_gpu_hysteresis && g_state.config.use_gpu;
+    g_state.config.gpu_morphology        = params->opt_gpu_morphology && g_state.config.use_gpu;
     g_state.config.gpu_background_update = params->opt_gpu_background && g_state.config.use_gpu;
-    g_state.config.gpu_overlay = params->opt_gpu_overlay && g_state.config.use_gpu;
-    g_state.config.kernel_fusion = params->opt_kernel_fusion && g_state.config.use_gpu;
-    const uint8_t low = static_cast<uint8_t>(std::clamp(g_params.th_low, 0, 255));
+    g_state.config.gpu_overlay           = params->opt_gpu_overlay    && g_state.config.use_gpu;
+    g_state.config.kernel_fusion         = params->opt_kernel_fusion  && g_state.config.use_gpu;
+    g_state.config.opt_cpu_simd         = params->opt_cpu_simd;
+
+    const uint8_t low  = static_cast<uint8_t>(std::clamp(g_params.th_low,  0, 255));
     const uint8_t high = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));
-    cudaMemcpyToSymbol(c_low_threshold, &low, sizeof(low));
+
+    cudaMemcpyToSymbol(c_low_threshold,  &low,  sizeof(low));
     cudaMemcpyToSymbol(c_high_threshold, &high, sizeof(high));
 }
 

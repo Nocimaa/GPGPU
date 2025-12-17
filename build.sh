@@ -11,7 +11,7 @@ cmake -S "$GP_DIR" -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE=Debug
 echo "Building GPGPU CUDA project..."
 cmake --build "$BUILD_DIR"
 
-PYTHON_BACKEND_DIR="$SCRIPT_ROOT/python-backend"
+PYTHON_BACKEND_DIR="$SCRIPT_ROOT/backend"
 PYTHON_ENGINE_LIB="$PYTHON_BACKEND_DIR/_stream_engine.so"
 BUILD_ENGINE_LIB="$BUILD_DIR/_stream_engine.so"
 

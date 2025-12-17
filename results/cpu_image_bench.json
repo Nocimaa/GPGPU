@@ -1,0 +1,19 @@
+[
+  {
+    "dataset": "car",
+    "combo": {
+      "opening_size": 1,
+      "th_low": 10,
+      "th_high": 35,
+      "bg_sampling_rate": 100,
+      "bg_number_frame": 5
+    },
+    "output_image": "/home/ubuntu/GPGPU/outputs/cpu_image_bench/car__opening_size1_th_low10_th_high35_bg_sampling_rate100_bg_number_frame5.png",
+    "command": "/home/ubuntu/GPGPU/gpgpu-cuda/build/stream --mode=cpu /tmp/cpu-image-bench-drk854py/stream_input.mp4 --output /tmp/cpu-image-bench-drk854py/diff_output.mp4 --opening_size=1 --th_low=10 --th_high=35 --bg_sampling_rate=100 --bg_number_frame=5",
+    "duration_seconds": 6.855778721161187,
+    "returncode": 0,
+    "stdout": "Output:",
+    "stderr": "Using method: cpu",
+    "overlay_error": "diff output missing"
+  }
+]
