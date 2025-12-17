@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <deque>
 #include <vector>
 
 // ====================
@@ -240,32 +241,54 @@ static void compute_diff_cpu(ProcessingState& state, uint8_t* buffer, int stride
 
 static void hysteresis_cpu(ProcessingState& state)
 {
+    const int w = state.width;
+    const int h = state.height;
+    const int total = w * h;
+
     // start from marker_mask
     std::copy(state.marker_mask.begin(), state.marker_mask.end(), state.motion_mask.begin());
 
-    const int w = state.width;
-    const int h = state.height;
+    // Flood-fill the low threshold mask starting from marker pixels instead of
+    // repeatedly scanning the whole frame until convergence.
+    std::deque<int> frontier;
+    frontier.resize(total);
+    int head = 0;
+    int tail = 0;
 
-    bool changed;
-    do
+    for (int i = 0; i < total; ++i)
     {
-        changed = false;
-        for (int y = 0; y < h; ++y)
-        {
-            for (int x = 0; x < w; ++x)
-            {
-                const int i = y * w + x;
-                if (state.motion_mask[i] != 0) continue;   // already active
-                if (state.input_mask[i] == 0) continue;    // not even in low mask
+        if (state.motion_mask[i] != 0)
+            frontier[tail++] = i;
+    }
 
-                if (hysteresis_activate(state.motion_mask.data(), state.input_mask.data(), x, y, w, h))
-                {
-                    state.motion_mask[i] = 255;
-                    changed = true;
-                }
+    while (head < tail)
+    {
+        const int idx = frontier[head++];
+        const int y = idx / w;
+        const int x = idx - y * w;
+
+        for (int dy = -1; dy <= 1; ++dy)
+        {
+            for (int dx = -1; dx <= 1; ++dx)
+            {
+                if (dx == 0 && dy == 0) continue;
+                const int nx = x + dx;
+                const int ny = y + dy;
+                if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+
+                const int nidx = ny * w + nx;
+                if (state.motion_mask[nidx] != 0) continue;  // already active
+                if (state.input_mask[nidx] == 0) continue;   // not in low mask
+
+                state.motion_mask[nidx] = 255;
+                if (tail == static_cast<int>(frontier.size()))
+                    frontier.push_back(nidx);
+                else
+                    frontier[tail] = nidx;
+                ++tail;
             }
         }
-    } while (changed);
+    }
 
     sync_motion_to_marker(state);
 }
@@ -719,7 +742,6 @@ extern "C" void cpt_init(Parameters* params)
     g_state.config.gpu_background_update = params->opt_gpu_background && g_state.config.use_gpu;
     g_state.config.gpu_overlay           = params->opt_gpu_overlay    && g_state.config.use_gpu;
     g_state.config.kernel_fusion         = params->opt_kernel_fusion  && g_state.config.use_gpu;
-    g_state.config.opt_cpu_simd         = params->opt_cpu_simd;
 
     const uint8_t low  = static_cast<uint8_t>(std::clamp(g_params.th_low,  0, 255));
     const uint8_t high = static_cast<uint8_t>(std::clamp(g_params.th_high, 0, 255));

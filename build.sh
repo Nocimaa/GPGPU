@@ -4,9 +4,10 @@ set -eu
 SCRIPT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 GP_DIR="$SCRIPT_ROOT/gpgpu-cuda"
 BUILD_DIR="$GP_DIR/build"
+BUILD_TYPE="${BUILD_TYPE:-Release}"
 
-echo "Configuring GPGPU CUDA project (Debug)..."
-cmake -S "$GP_DIR" -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE=Debug
+echo "Configuring GPGPU CUDA project (${BUILD_TYPE})..."
+cmake -S "$GP_DIR" -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 
 echo "Building GPGPU CUDA project..."
 cmake --build "$BUILD_DIR"

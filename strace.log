@@ -1,0 +1,1635 @@
+execve("./gpgpu-cuda/build/stream", ["./gpgpu-cuda/build/stream", "--mode=cpu", "./gpgpu-cuda/samples/ACET.mp4", "--output=out.mp4"], 0x7ffdd6d24c08 /* 45 vars */) = 0
+brk(NULL)                               = 0x5600a5761000
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0ac72000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v3/libgstvideo-1.0.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v3/", 0x7ffe6d055ac0, 0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v2/libgstvideo-1.0.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v2/", 0x7ffe6d055ac0, 0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libgstvideo-1.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=1199008, ...}) = 0
+mmap(NULL, 1204368, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0ab4b000
+mmap(0x756b0ab68000, 827392, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d000) = 0x756b0ab68000
+mmap(0x756b0ac32000, 176128, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe7000) = 0x756b0ac32000
+mmap(0x756b0ac5d000, 81920, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x111000) = 0x756b0ac5d000
+mmap(0x756b0ac71000, 144, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0ac71000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libgstreamer-1.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=1502560, ...}) = 0
+mmap(NULL, 1506320, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a9db000
+mmap(0x756b0aa0b000, 925696, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x30000) = 0x756b0aa0b000
+mmap(0x756b0aaed000, 344064, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x112000) = 0x756b0aaed000
+mmap(0x756b0ab41000, 36864, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x166000) = 0x756b0ab41000
+mmap(0x756b0ab4a000, 3088, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0ab4a000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=448968, ...}) = 0
+mmap(NULL, 449576, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a96d000
+mmap(0x756b0a97d000, 270336, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x756b0a97d000
+mmap(0x756b0a9bf000, 98304, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x52000) = 0x756b0a9bf000
+mmap(0x756b0a9d7000, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6a000) = 0x756b0a9d7000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=1498832, ...}) = 0
+mmap(NULL, 1499848, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a7fe000
+mmap(0x756b0a81d000, 774144, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1f000) = 0x756b0a81d000
+mmap(0x756b0a8da000, 589824, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xdc000) = 0x756b0a8da000
+mmap(0x756b0a96a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x16c000) = 0x756b0a96a000
+mmap(0x756b0a96c000, 712, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0a96c000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libcudart.so.12", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0`\366\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=683360, ...}) = 0
+mmap(NULL, 4882360, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_DENYWRITE, -1, 0) = 0x756b0a356000
+mmap(0x756b0a400000, 2785208, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0) = 0x756b0a400000
+munmap(0x756b0a356000, 696320)          = 0
+munmap(0x756b0a6a8000, 1400760)         = 0
+mprotect(0x756b0a4a1000, 2097152, PROT_NONE) = 0
+mmap(0x756b0a6a1000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa1000) = 0x756b0a6a1000
+mmap(0x756b0a6a7000, 4024, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0a6a7000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libstdc++.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=2653696, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a7fc000
+mmap(NULL, 2670920, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a000000
+mmap(0x756b0a0a2000, 1363968, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa2000) = 0x756b0a0a2000
+mmap(0x756b0a1ef000, 557056, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ef000) = 0x756b0a1ef000
+mmap(0x756b0a277000, 73728, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x276000) = 0x756b0a277000
+mmap(0x756b0a289000, 12616, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0a289000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=178928, ...}) = 0
+mmap(NULL, 181160, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a7cf000
+mmap(0x756b0a7d3000, 143360, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x756b0a7d3000
+mmap(0x756b0a7f6000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x27000) = 0x756b0a7f6000
+mmap(0x756b0a7fa000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2a000) = 0x756b0a7fa000
+close(3)                                = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\247\2\0\0\0\0\0"..., 832) = 832
+pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+fstat(3, {st_mode=S_IFREG|0755, st_size=2178688, ...}) = 0
+pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+mmap(NULL, 2223736, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b09c00000
+mmap(0x756b09c28000, 1658880, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x756b09c28000
+mmap(0x756b09dbd000, 323584, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1bd000) = 0x756b09dbd000
+mmap(0x756b09e0c000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20b000) = 0x756b09e0c000
+mmap(0x756b09e12000, 52856, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b09e12000
+close(3)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=71763, ...}) = 0
+mmap(NULL, 71763, PROT_READ, MAP_PRIVATE, 3, 0) = 0x756b0a7bd000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgstbase-1.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=562912, ...}) = 0
+mmap(NULL, 560936, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a734000
+mmap(0x756b0a743000, 389120, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x756b0a743000
+mmap(0x756b0a7a2000, 102400, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6e000) = 0x756b0a7a2000
+mmap(0x756b0a7bb000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x87000) = 0x756b0a7bb000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=1010032, ...}) = 0
+mmap(NULL, 1007640, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a309000
+mmap(0x756b0a31a000, 548864, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x11000) = 0x756b0a31a000
+mmap(0x756b0a3a0000, 385024, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x97000) = 0x756b0a3a0000
+mmap(0x756b0a3fe000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf5000) = 0x756b0a3fe000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/liborc-0.4.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=970176, ...}) = 0
+mmap(NULL, 973728, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b09f12000
+mmap(0x756b09f20000, 733184, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x756b09f20000
+mmap(0x756b09fd3000, 155648, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xc1000) = 0x756b09fd3000
+mmap(0x756b09ff9000, 28672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe6000) = 0x756b09ff9000
+close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a732000
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgmodule-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=22816, ...}) = 0
+mmap(NULL, 24712, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a72b000
+mmap(0x756b0a72d000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a72d000
+mmap(0x756b0a72f000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x756b0a72f000
+mmap(0x756b0a730000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x756b0a730000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libffi.so.8", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=47752, ...}) = 0
+mmap(NULL, 50704, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a71e000
+mmap(0x756b0a720000, 28672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a720000
+mmap(0x756b0a727000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x9000) = 0x756b0a727000
+mmap(0x756b0a729000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0x756b0a729000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libatomic.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=35120, ...}) = 0
+mmap(NULL, 41096, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a713000
+mmap(0x756b0a715000, 16384, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a715000
+mmap(0x756b0a719000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x756b0a719000
+mmap(0x756b0a71b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x756b0a71b000
+mmap(0x756b0a71d000, 136, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b0a71d000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpcre2-8.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=776880, ...}) = 0
+mmap(NULL, 778928, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b09e53000
+mmap(0x756b09e56000, 581632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x756b09e56000
+mmap(0x756b09ee4000, 180224, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x91000) = 0x756b09ee4000
+mmap(0x756b09f10000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xbc000) = 0x756b09f10000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=14488, ...}) = 0
+mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a70e000
+mmap(0x756b0a70f000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x756b0a70f000
+mmap(0x756b0a710000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a710000
+mmap(0x756b0a711000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a711000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=14488, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a70c000
+mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a707000
+mmap(0x756b0a708000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x756b0a708000
+mmap(0x756b0a709000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a709000
+mmap(0x756b0a70a000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a70a000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/librt.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=14704, ...}) = 0
+mmap(NULL, 16400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b0a702000
+mmap(0x756b0a703000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x756b0a703000
+mmap(0x756b0a704000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a704000
+mmap(0x756b0a705000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x756b0a705000
+close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a700000
+mmap(NULL, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a6fb000
+arch_prctl(ARCH_SET_FS, 0x756b0a6fd000) = 0
+set_tid_address(0x756b0a6fd2d0)         = 1550757
+set_robust_list(0x756b0a6fd2e0, 24)     = 0
+rseq(0x756b0a6fbf20, 0x20, 0, 0x53053053) = 0
+mprotect(0x756b09e0c000, 16384, PROT_READ) = 0
+mprotect(0x756b0a705000, 4096, PROT_READ) = 0
+mprotect(0x756b0a70a000, 4096, PROT_READ) = 0
+mprotect(0x756b0a711000, 4096, PROT_READ) = 0
+mprotect(0x756b09f10000, 4096, PROT_READ) = 0
+mprotect(0x756b0a71b000, 4096, PROT_READ) = 0
+mprotect(0x756b0a729000, 4096, PROT_READ) = 0
+mprotect(0x756b0a3fe000, 4096, PROT_READ) = 0
+mprotect(0x756b0a96a000, 4096, PROT_READ) = 0
+mprotect(0x756b0a730000, 4096, PROT_READ) = 0
+mprotect(0x756b09ff9000, 12288, PROT_READ) = 0
+mprotect(0x756b0a9d7000, 12288, PROT_READ) = 0
+mprotect(0x756b0ab41000, 24576, PROT_READ) = 0
+mprotect(0x756b0a7bb000, 4096, PROT_READ) = 0
+mprotect(0x756b0a7fa000, 4096, PROT_READ) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a6f9000
+mprotect(0x756b0a277000, 61440, PROT_READ) = 0
+mprotect(0x756b0a6a1000, 20480, PROT_READ) = 0
+mprotect(0x756b0ac5d000, 77824, PROT_READ) = 0
+mprotect(0x56007281a000, 4096, PROT_READ) = 0
+mprotect(0x756b0acb4000, 8192, PROT_READ) = 0
+prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+munmap(0x756b0a7bd000, 71763)           = 0
+getrandom("\x27\x3a\xa6\xa4\x55\x87\xe3\x80", 8, GRND_NONBLOCK) = 8
+brk(NULL)                               = 0x5600a5761000
+brk(0x5600a5782000)                     = 0x5600a5782000
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a2897bc, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a6a716c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "/proc/self/cmdline", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+fcntl(3, F_GETFL)                       = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(3, "./gpgpu-cuda/build/stream\0--mode"..., 4096) = 84
+read(3, "", 3072)                       = 0
+close(3)                                = 0
+readlink("/proc/self/exe", "/home/ubuntu/GPGPU/gpgpu-cuda/bu"..., 256) = 42
+readlink("/usr", 0x7ffe6d055b40, 1023)  = -1 EINVAL (Invalid argument)
+readlink("/usr/lib", 0x7ffe6d055b40, 1023) = -1 EINVAL (Invalid argument)
+readlink("/usr/lib/x86_64-linux-gnu", 0x7ffe6d055b40, 1023) = -1 EINVAL (Invalid argument)
+readlink("/usr/lib/x86_64-linux-gnu/libgstreamer-1.0.so.0", "libgstreamer-1.0.so.0.2600.0", 1023) = 28
+readlink("/usr/lib/x86_64-linux-gnu/libgstreamer-1.0.so.0.2600.0", 0x7ffe6d055b40, 1023) = -1 EINVAL (Invalid argument)
+uname({sysname="Linux", nodename="vps-557503ca", ...}) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+brk(0x5600a57a3000)                     = 0x5600a57a3000
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "/home/ubuntu/.cache/gstreamer-1.0/registry.x86_64.bin", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0600, st_size=1427106, ...}) = 0
+mmap(NULL, 1427106, PROT_READ, MAP_PRIVATE, 3, 0) = 0x756b09aa3000
+close(3)                                = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+brk(0x5600a57c4000)                     = 0x5600a57c4000
+brk(0x5600a57e5000)                     = 0x5600a57e5000
+brk(0x5600a5806000)                     = 0x5600a5806000
+brk(0x5600a5827000)                     = 0x5600a5827000
+brk(0x5600a5848000)                     = 0x5600a5848000
+brk(0x5600a586b000)                     = 0x5600a586b000
+brk(0x5600a588c000)                     = 0x5600a588c000
+brk(0x5600a58ad000)                     = 0x5600a58ad000
+mmap(NULL, 184320, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a6cc000
+mmap(NULL, 172032, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a2df000
+brk(0x5600a58ce000)                     = 0x5600a58ce000
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+brk(0x5600a58ef000)                     = 0x5600a58ef000
+brk(0x5600a5910000)                     = 0x5600a5910000
+brk(0x5600a5931000)                     = 0x5600a5931000
+brk(0x5600a5952000)                     = 0x5600a5952000
+brk(0x5600a5973000)                     = 0x5600a5973000
+brk(0x5600a5994000)                     = 0x5600a5994000
+brk(0x5600a59b5000)                     = 0x5600a59b5000
+brk(0x5600a59d6000)                     = 0x5600a59d6000
+munmap(0x756b09aa3000, 1427106)         = 0
+openat(AT_FDCWD, "/home/ubuntu/.local/share/gstreamer-1.0/plugins", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+readlink("/usr", 0x7ffe6d055bb0, 1023)  = -1 EINVAL (Invalid argument)
+readlink("/usr/lib", 0x7ffe6d055bb0, 1023) = -1 EINVAL (Invalid argument)
+readlink("/usr/lib/x86_64-linux-gnu", 0x7ffe6d055bb0, 1023) = -1 EINVAL (Invalid argument)
+readlink("/usr/lib/x86_64-linux-gnu/libgstreamer-1.0.so.0", "libgstreamer-1.0.so.0.2600.0", 1023) = 28
+readlink("/usr/lib/x86_64-linux-gnu/libgstreamer-1.0.so.0.2600.0", 0x7ffe6d055bb0, 1023) = -1 EINVAL (Invalid argument)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+fstat(3, {st_mode=S_IFDIR|0755, st_size=20480, ...}) = 0
+getdents64(3, 0x5600a59c0060 /* 272 entries */, 32768) = 10872
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstinterleave.so", {st_mode=S_IFREG|0644, st_size=59992, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstalphacolor.so", {st_mode=S_IFREG|0644, st_size=55616, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaom.so", {st_mode=S_IFREG|0644, st_size=55896, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasfmux.so", {st_mode=S_IFREG|0644, st_size=80664, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenal.so", {st_mode=S_IFREG|0644, st_size=47576, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstadaptivedemux2.so", {st_mode=S_IFREG|0644, st_size=621400, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfieldanalysis.so", {st_mode=S_IFREG|0644, st_size=47576, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiomixmatrix.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstavtp.so", {st_mode=S_IFREG|0644, st_size=117848, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlame.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwaylandsink.so", {st_mode=S_IFREG|0644, st_size=43416, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsmoothstreaming.so", {st_mode=S_IFREG|0644, st_size=51736, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtsdec.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideofilter.so", {st_mode=S_IFREG|0644, st_size=97176, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvulkan.so", {st_mode=S_IFREG|0644, st_size=263096, ...}, 0) = 0
+openat(AT_FDCWD, "/dev/dri", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/charset.alias", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=27028, ...}) = 0
+mmap(NULL, 27028, PROT_READ, MAP_SHARED, 4, 0) = 0x756b0a7c8000
+close(4)                                = 0
+futex(0x756b09e1172c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstbayer.so", {st_mode=S_IFREG|0644, st_size=51672, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttranscode.so", {st_mode=S_IFREG|0644, st_size=59928, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsctp.so", {st_mode=S_IFREG|0644, st_size=494296, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideosignal.so", {st_mode=S_IFREG|0644, st_size=39232, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstflv.so", {st_mode=S_IFREG|0644, st_size=154328, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstxvimagesink.so", {st_mode=S_IFREG|0644, st_size=92584, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrfbsrc.so", {st_mode=S_IFREG|0644, st_size=68024, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpegpsdemux.so", {st_mode=S_IFREG|0644, st_size=92824, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdv.so", {st_mode=S_IFREG|0644, st_size=64152, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlevel.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstxingmux.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoretracers.so", {st_mode=S_IFREG|0644, st_size=123032, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtsp.so", {st_mode=S_IFREG|0644, st_size=232296, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaasink.so", {st_mode=S_IFREG|0644, st_size=39448, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibvisual.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/home/ubuntu/.libvisual/actor", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libvisual-0.4/actor", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsta52dec.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmultipart.so", {st_mode=S_IFREG|0644, st_size=39512, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstzbar.so", {st_mode=S_IFREG|0644, st_size=22840, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsoundtouch.so", {st_mode=S_IFREG|0644, st_size=43568, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudioparsers.so", {st_mode=S_IFREG|0644, st_size=154968, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsrtp.so", {st_mode=S_IFREG|0644, st_size=76664, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvolume.so", {st_mode=S_IFREG|0644, st_size=47424, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiobuffersplit.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrist.so", {st_mode=S_IFREG|0644, st_size=105592, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlv2.so", {st_mode=S_IFREG|0644, st_size=63928, ...}, 0) = 0
+openat(AT_FDCWD, "/home/ubuntu/.lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib64/lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/local/lib/lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/local/lib64/lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/lv2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpegtsmux.so", {st_mode=S_IFREG|0644, st_size=137880, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so", {st_mode=S_IFREG|0644, st_size=277456, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libavcodec.so.60", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libavformat.so.60", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstossaudio.so", {st_mode=S_IFREG|0644, st_size=51672, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcairo.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstteletext.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmxf.so", {st_mode=S_IFREG|0644, st_size=388184, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstflac.so", {st_mode=S_IFREG|0644, st_size=84632, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstautoconvert.so", {st_mode=S_IFREG|0644, st_size=77208, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstresindvd.so", {st_mode=S_IFREG|0644, st_size=191928, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgaudieffects.so", {st_mode=S_IFREG|0644, st_size=40152, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstjack.so", {st_mode=S_IFREG|0644, st_size=72152, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstalaw.so", {st_mode=S_IFREG|0644, st_size=27224, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtpmanager.so", {st_mode=S_IFREG|0644, st_size=558040, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiofxbad.so", {st_mode=S_IFREG|0644, st_size=14808, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfaceoverlay.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmultifile.so", {st_mode=S_IFREG|0644, st_size=236792, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdspu.so", {st_mode=S_IFREG|0644, st_size=72280, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideotestsrc.so", {st_mode=S_IFREG|0644, st_size=92568, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstimagefreeze.so", {st_mode=S_IFREG|0644, st_size=43480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgsm.so", {st_mode=S_IFREG|0644, st_size=23128, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsrt.so", {st_mode=S_IFREG|0644, st_size=81400, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstonnx.so", {st_mode=S_IFREG|0644, st_size=72576, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstjp2kdecimator.so", {st_mode=S_IFREG|0644, st_size=47576, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstbluez.so", {st_mode=S_IFREG|0644, st_size=92696, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpg123.so", {st_mode=S_IFREG|0644, st_size=35224, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiomixer.so", {st_mode=S_IFREG|0644, st_size=55896, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgoom.so", {st_mode=S_IFREG|0644, st_size=104984, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx265.so", {st_mode=S_IFREG|0644, st_size=55704, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcutter.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoparsersbad.so", {st_mode=S_IFREG|0644, st_size=385672, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgst1394.so", {st_mode=S_IFREG|0644, st_size=51736, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstbz2.so", {st_mode=S_IFREG|0644, st_size=27224, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtmp.so", {st_mode=S_IFREG|0644, st_size=35416, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmplex.so", {st_mode=S_IFREG|0644, st_size=51832, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstladspa.so", {st_mode=S_IFREG|0644, st_size=59712, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/home/ubuntu/.ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib64/ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/local/lib/ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/local/lib64/ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/ladspa", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmidi.so", {st_mode=S_IFREG|0644, st_size=43480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpeg2enc.so", {st_mode=S_IFREG|0644, st_size=64216, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopengl.so", {st_mode=S_IFREG|0644, st_size=364208, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdread.so", {st_mode=S_IFREG|0644, st_size=55736, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvorbis.so", {st_mode=S_IFREG|0644, st_size=64152, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrsvg.so", {st_mode=S_IFREG|0644, st_size=35480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstflxdec.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmonoscope.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstid3tag.so", {st_mode=S_IFREG|0644, st_size=55768, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdecklink.so", {st_mode=S_IFREG|0644, st_size=211816, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstde265.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgme.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttypefindfunctions.so", {st_mode=S_IFREG|0644, st_size=119848, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlc3.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtponvif.so", {st_mode=S_IFREG|0644, st_size=35416, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvmnc.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgdp.so", {st_mode=S_IFREG|0644, st_size=51800, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdc1394.so", {st_mode=S_IFREG|0644, st_size=47424, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdsd.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpegtsdemux.so", {st_mode=S_IFREG|0644, st_size=207640, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgeometrictransform.so", {st_mode=S_IFREG|0644, st_size=63960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfestival.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstproxy.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideobox.so", {st_mode=S_IFREG|0644, st_size=121304, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiofx.so", {st_mode=S_IFREG|0644, st_size=170584, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstqroverlay.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstoverlaycomposition.so", {st_mode=S_IFREG|0644, st_size=35352, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgoom2k1.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsvtav1.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstremovesilence.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoreelements.so", {st_mode=S_IFREG|0644, st_size=467640, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvbsuboverlay.so", {st_mode=S_IFREG|0644, st_size=72344, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdlpcmdec.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so", {st_mode=S_IFREG|0644, st_size=154264, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtp.so", {st_mode=S_IFREG|0644, st_size=698968, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwavpack.so", {st_mode=S_IFREG|0644, st_size=47768, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstid3demux.so", {st_mode=S_IFREG|0644, st_size=18840, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstogg.so", {st_mode=S_IFREG|0644, st_size=261272, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmatroska.so", {st_mode=S_IFREG|0644, st_size=429272, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpegpsmux.so", {st_mode=S_IFREG|0644, st_size=63960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstapetag.so", {st_mode=S_IFREG|0644, st_size=22936, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpeg2dec.so", {st_mode=S_IFREG|0644, st_size=43480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsndfile.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstoss4.so", {st_mode=S_IFREG|0644, st_size=59712, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstshm.so", {st_mode=S_IFREG|0644, st_size=59864, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwavparse.so", {st_mode=S_IFREG|0644, st_size=76184, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstuvcgadget.so", {st_mode=S_IFREG|0644, st_size=55976, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdash.so", {st_mode=S_IFREG|0644, st_size=240408, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsteffectv.so", {st_mode=S_IFREG|0644, st_size=81752, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstchromaprint.so", {st_mode=S_IFREG|0644, st_size=18752, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmse.so", {st_mode=S_IFREG|0644, st_size=14496, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstswitchbin.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstflite.so", {st_mode=S_IFREG|0644, st_size=22936, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstjpeg.so", {st_mode=S_IFREG|0644, st_size=64216, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwildmidi.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcamerabin.so", {st_mode=S_IFREG|0644, st_size=92888, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoframe_audiolevel.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttcp.so", {st_mode=S_IFREG|0644, st_size=129688, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstspeex.so", {st_mode=S_IFREG|0644, st_size=47704, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtmf.so", {st_mode=S_IFREG|0644, st_size=56024, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideo4linux2.so", {st_mode=S_IFREG|0644, st_size=412216, ...}, 0) = 0
+openat(AT_FDCWD, "/dev", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+fstat(4, {st_mode=S_IFDIR|0755, st_size=3960, ...}) = 0
+brk(0x5600a59f9000)                     = 0x5600a59f9000
+getdents64(4, 0x5600a59d0230 /* 198 entries */, 32768) = 5920
+getdents64(4, 0x5600a59d0230 /* 0 entries */, 32768) = 0
+brk(0x5600a59f1000)                     = 0x5600a59f1000
+close(4)                                = 0
+openat(AT_FDCWD, "/dev/v4l2", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttaglib.so", {st_mode=S_IFREG|0644, st_size=55992, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstivtc.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwebrtcdsp.so", {st_mode=S_IFREG|0644, st_size=47792, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenjpeg.so", {st_mode=S_IFREG|0644, st_size=92760, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideomixer.so", {st_mode=S_IFREG|0644, st_size=100888, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdsub.so", {st_mode=S_IFREG|0644, st_size=43672, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so", {st_mode=S_IFREG|0644, st_size=80280, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrawparse.so", {st_mode=S_IFREG|0644, st_size=68440, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstv4l2codecs.so", {st_mode=S_IFREG|0644, st_size=229080, ...}, 0) = 0
+openat(AT_FDCWD, "/dev", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+fstat(4, {st_mode=S_IFDIR|0755, st_size=3960, ...}) = 0
+getdents64(4, 0x5600a59d0230 /* 198 entries */, 32768) = 5920
+getdents64(4, 0x5600a59d0230 /* 0 entries */, 32768) = 0
+close(4)                                = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcdparanoia.so", {st_mode=S_IFREG|0644, st_size=26944, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgio.so", {st_mode=S_IFREG|0644, st_size=59864, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gio/modules", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/share/gvfs/mounts", 0x7ffe6d055e70, 0) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstnetsim.so", {st_mode=S_IFREG|0644, st_size=31256, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudioresample.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstequalizer.so", {st_mode=S_IFREG|0644, st_size=39232, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgtkwayland.so", {st_mode=S_IFREG|0644, st_size=63896, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsmooth.so", {st_mode=S_IFREG|0644, st_size=18744, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaiff.so", {st_mode=S_IFREG|0644, st_size=59992, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstadpcmdec.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstipcpipeline.so", {st_mode=S_IFREG|0644, st_size=109080, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfluidsynthmidi.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstbasedebug.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwebrtc.so", {st_mode=S_IFREG|0644, st_size=269304, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideorate.so", {st_mode=S_IFREG|0644, st_size=63960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdebug.so", {st_mode=S_IFREG|0644, st_size=77176, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstbs2b.so", {st_mode=S_IFREG|0644, st_size=22848, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaccurip.so", {st_mode=S_IFREG|0644, st_size=18752, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoconvertscale.so", {st_mode=S_IFREG|0644, st_size=59784, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttwolame.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmodplug.so", {st_mode=S_IFREG|0644, st_size=39472, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcodec2json.so", {st_mode=S_IFREG|0644, st_size=84824, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenni2.so", {st_mode=S_IFREG|0644, st_size=35320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcolormanagement.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvbsubenc.so", {st_mode=S_IFREG|0644, st_size=117208, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwebp.so", {st_mode=S_IFREG|0644, st_size=35416, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsiren.so", {st_mode=S_IFREG|0644, st_size=78456, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtls.so", {st_mode=S_IFREG|0644, st_size=113976, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstttmlsubs.so", {st_mode=S_IFREG|0644, st_size=125752, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiovisualizers.so", {st_mode=S_IFREG|0644, st_size=47960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttheora.so", {st_mode=S_IFREG|0644, st_size=68312, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstximagesink.so", {st_mode=S_IFREG|0644, st_size=72176, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsoup.so", {st_mode=S_IFREG|0644, st_size=109080, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmusepack.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstspandsp.so", {st_mode=S_IFREG|0644, st_size=31384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstnavigationtest.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstunixfd.so", {st_mode=S_IFREG|0644, st_size=43480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenmpt.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsthls.so", {st_mode=S_IFREG|0644, st_size=113304, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopusparse.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcompositor.so", {st_mode=S_IFREG|0644, st_size=149976, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsubenc.so", {st_mode=S_IFREG|0644, st_size=23128, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpulseaudio.so", {st_mode=S_IFREG|0644, st_size=133440, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+fstat(4, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getdents64(4, 0x5600a59d0230 /* 3 entries */, 32768) = 72
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include/gst", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include/gst", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 5
+fstat(5, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getdents64(5, 0x5600a59d8270 /* 3 entries */, 32768) = 72
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include/gst/gl", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include/gst/gl", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 6
+fstat(6, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getdents64(6, 0x5600a59e02b0 /* 3 entries */, 32768) = 88
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/include/gst/gl/gstglconfig.h", {st_mode=S_IFREG|0644, st_size=1168, ...}, 0) = 0
+getdents64(6, 0x5600a59e02b0 /* 0 entries */, 32768) = 0
+close(6)                                = 0
+getdents64(5, 0x5600a59d8270 /* 0 entries */, 32768) = 0
+close(5)                                = 0
+getdents64(4, 0x5600a59d0230 /* 0 entries */, 32768) = 0
+close(4)                                = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstadpcmenc.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstximagesrc.so", {st_mode=S_IFREG|0644, st_size=51640, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstudp.so", {st_mode=S_IFREG|0644, st_size=105016, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstkms.so", {st_mode=S_IFREG|0644, st_size=92536, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtpmanagerbad.so", {st_mode=S_IFREG|0644, st_size=43544, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstgdkpixbuf.so", {st_mode=S_IFREG|0644, st_size=55960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsty4menc.so", {st_mode=S_IFREG|0644, st_size=18904, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstinter.so", {st_mode=S_IFREG|0644, st_size=56024, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstadder.so", {st_mode=S_IFREG|0644, st_size=68056, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstclosedcaption.so", {st_mode=S_IFREG|0644, st_size=319896, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstanalyticsoverlay.so", {st_mode=S_IFREG|0644, st_size=35352, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsmpte.so", {st_mode=S_IFREG|0644, st_size=88728, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmulaw.so", {st_mode=S_IFREG|0644, st_size=23128, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiolatency.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstva.so", {st_mode=S_IFREG|0644, st_size=694808, ...}, 0) = 0
+openat(AT_FDCWD, "/dev/dri", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/dri", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4
+fstat(4, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getdents64(4, 0x5600a59d0230 /* 16 entries */, 32768) = 560
+getdents64(4, 0x5600a59d0230 /* 0 entries */, 32768) = 0
+close(4)                                = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstautodetect.so", {st_mode=S_IFREG|0644, st_size=31448, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrealmedia.so", {st_mode=S_IFREG|0644, st_size=88728, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstspeed.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpnm.so", {st_mode=S_IFREG|0644, st_size=35480, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcodecalpha.so", {st_mode=S_IFREG|0644, st_size=39832, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstuvch264.so", {st_mode=S_IFREG|0644, st_size=101208, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvoamrwbenc.so", {st_mode=S_IFREG|0644, st_size=18904, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstspectrum.so", {st_mode=S_IFREG|0644, st_size=35136, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvpx.so", {st_mode=S_IFREG|0644, st_size=109272, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcacasink.so", {st_mode=S_IFREG|0644, st_size=31256, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtmp2.so", {st_mode=S_IFREG|0644, st_size=182768, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfreeverb.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdeinterlace.so", {st_mode=S_IFREG|0644, st_size=182720, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstplayback.so", {st_mode=S_IFREG|0644, st_size=668760, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsubparse.so", {st_mode=S_IFREG|0644, st_size=93400, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvoaacenc.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideocrop.so", {st_mode=S_IFREG|0644, st_size=43608, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideofiltersbad.so", {st_mode=S_IFREG|0644, st_size=31040, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstneonhttpsrc.so", {st_mode=S_IFREG|0644, st_size=39352, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfrei0r.so", {st_mode=S_IFREG|0644, st_size=51720, ...}, 0) = 0
+openat(AT_FDCWD, "/home/ubuntu/.frei0r-1/lib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/local/lib/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib32/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/local/lib32/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/lib64/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/local/lib64/frei0r-1", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOENT (No such file or directory)
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstinsertbin.so", {st_mode=S_IFREG|0644, st_size=14496, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstencoding.so", {st_mode=S_IFREG|0644, st_size=105560, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpbtypes.so", {st_mode=S_IFREG|0644, st_size=14504, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstzxing.so", {st_mode=S_IFREG|0644, st_size=27184, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlegacyrawparse.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvb.so", {st_mode=S_IFREG|0644, st_size=139192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcurl.so", {st_mode=S_IFREG|0644, st_size=125424, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenaptx.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpango.so", {st_mode=S_IFREG|0644, st_size=113424, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstjpegformat.so", {st_mode=S_IFREG|0644, st_size=43608, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudioconvert.so", {st_mode=S_IFREG|0644, st_size=43768, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopus.so", {st_mode=S_IFREG|0644, st_size=76376, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstreplaygain.so", {st_mode=S_IFREG|0644, st_size=47832, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiorate.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstauparse.so", {st_mode=S_IFREG|0644, st_size=31192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenexr.so", {st_mode=S_IFREG|0644, st_size=35392, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsid.so", {st_mode=S_IFREG|0644, st_size=35384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstassrender.so", {st_mode=S_IFREG|0644, st_size=55960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttensordecoders.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstavi.so", {st_mode=S_IFREG|0644, st_size=191224, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstldac.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstalpha.so", {st_mode=S_IFREG|0644, st_size=199192, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfbdevsink.so", {st_mode=S_IFREG|0644, st_size=22936, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstshout2.so", {st_mode=S_IFREG|0644, st_size=39320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstqsv.so", {st_mode=S_IFREG|0644, st_size=375576, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfaad.so", {st_mode=S_IFREG|0644, st_size=35288, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstisomp4.so", {st_mode=S_IFREG|0644, st_size=676264, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaes.so", {st_mode=S_IFREG|0644, st_size=39608, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstshapewipe.so", {st_mode=S_IFREG|0644, st_size=35352, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsegmentclip.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwavenc.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcdio.so", {st_mode=S_IFREG|0644, st_size=22848, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsty4mdec.so", {st_mode=S_IFREG|0644, st_size=39384, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenh264.so", {st_mode=S_IFREG|0644, st_size=43608, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstinterlace.so", {st_mode=S_IFREG|0644, st_size=51672, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsttimecode.so", {st_mode=S_IFREG|0644, st_size=84760, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpcapparse.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstapp.so", {st_mode=S_IFREG|0644, st_size=14504, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcodectimestamper.so", {st_mode=S_IFREG|0644, st_size=43608, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoloreffects.so", {st_mode=S_IFREG|0644, st_size=35256, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgsticydemux.so", {st_mode=S_IFREG|0644, st_size=27096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdebugutilsbad.so", {st_mode=S_IFREG|0644, st_size=118136, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstivfparse.so", {st_mode=S_IFREG|0644, st_size=23000, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsbc.so", {st_mode=S_IFREG|0644, st_size=31320, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpng.so", {st_mode=S_IFREG|0644, st_size=39512, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsdpelem.so", {st_mode=S_IFREG|0644, st_size=59960, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiotestsrc.so", {st_mode=S_IFREG|0644, st_size=76248, ...}, 0) = 0
+getdents64(3, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=71763, ...}) = 0
+mmap(NULL, 71763, PROT_READ, MAP_PRIVATE, 3, 0) = 0x756b0a6ba000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libcuda.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\300\236\27\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=71373816, ...}) = 0
+mmap(NULL, 72106752, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x756b05600000
+mprotect(0x756b05779000, 68255744, PROT_NONE) = 0
+mmap(0x756b05779000, 13750272, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x179000) = 0x756b05779000
+mmap(0x756b06496000, 54501376, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe96000) = 0x756b06496000
+mmap(0x756b09891000, 1576960, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4290000) = 0x756b09891000
+mmap(0x756b09a12000, 729856, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b09a12000
+close(3)                                = 0
+mprotect(0x756b09891000, 905216, PROT_READ) = 0
+sched_get_priority_max(SCHED_RR)        = 99
+sched_get_priority_min(SCHED_RR)        = 1
+munmap(0x756b0a6ba000, 71763)           = 0
+getpid()                                = 1550757
+openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0-7\n", 1024)                  = 4
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0-7\n", 1024)                  = 4
+close(3)                                = 0
+sched_getaffinity(1550757, 8, [0 1 2 3 4 5 6 7]) = 8
+openat(AT_FDCWD, "/proc/sys/vm/mmap_min_addr", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+read(3, "65536\n", 1024)                = 6
+close(3)                                = 0
+openat(AT_FDCWD, "/proc/cpuinfo", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(3, "processor\t: 0\nvendor_id\t: Genuin"..., 1024) = 1024
+read(3, "s l1tf mds swapgs itlb_multihit "..., 1024) = 1024
+close(3)                                = 0
+openat(AT_FDCWD, "/proc/self/maps", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(3, "560072801000-560072804000 r--p 0"..., 1024) = 1024
+read(3, "56b09890000-756b09891000 ---p 04"..., 1024) = 1024
+read(3, "e56000 r--p 00000000 08:01 6339 "..., 1024) = 1024
+read(3, "86_64-linux-gnu/liborc-0.4.so.0."..., 1024) = 1024
+read(3, "        /usr/lib/x86_64-linux-gn"..., 1024) = 1024
+read(3, "  /usr/lib/x86_64-linux-gnu/libr"..., 1024) = 1024
+read(3, "_64-linux-gnu/libpthread.so.0\n75"..., 1024) = 1024
+read(3, "8:01 6376                       "..., 1024) = 1024
+read(3, "ib/x86_64-linux-gnu/libgmodule-2"..., 1024) = 1024
+read(3, "7680                       /usr/"..., 1024) = 1024
+read(3, "x86_64-linux-gnu/libglib-2.0.so."..., 1024) = 1024
+read(3, "            /usr/lib/x86_64-linu"..., 1024) = 1024
+read(3, "b0ac5d000 r--p 000e7000 08:01 89"..., 1024) = 1024
+read(3, "b0acb4000-756b0acb6000 r--p 0003"..., 1024) = 451
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0-7\n", 1024)                  = 4
+close(3)                                = 0
+getpid()                                = 1550757
+getpid()                                = 1550757
+eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK)   = 3
+fcntl(3, F_SETFL, O_RDONLY|O_NONBLOCK)  = 0
+rt_sigaction(SIGRT_1, {sa_handler=0x756b09c9fa50, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_RESTART|SA_SIGINFO, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+mmap(NULL, 8392704, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x756b04dff000
+mprotect(0x756b04e00000, 8388608, PROT_READ|PROT_WRITE) = 0
+rt_sigprocmask(SIG_BLOCK, ~[], [], 8)   = 0
+clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x756b055ff2d0, parent_tid=0x756b055ff2d0, exit_signal=0, stack=0x756b04dff000, stack_size=0x7fd940, tls=0x756b055ff000} => {parent_tid=[1550758]}, 88) = 1550758
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+pipe2([4, 5], O_CLOEXEC)                = 0
+pipe2([6, 7], O_CLOEXEC)                = 0
+openat(AT_FDCWD, "/proc/self/task/1550758/comm", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 8
+fstat(8, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+write(8, "cuda00001400006", 15)         = 15
+close(8)                                = 0
+write(3, "\1\0\0\0\0\0\0\0", 8)         = 8
+futex(0x756b09a13e10, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "/dev/shm/cuda_injection_path_shm", O_RDWR|O_NOFOLLOW|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/.nv/nvidia-application-profile-globals-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/.nv/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/.nv/nvidia-application-profiles-rc.d", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/nvidia/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/nvidia/nvidia-application-profiles-rc.d/", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/share/nvidia/nvidia-application-profiles-570.195.03-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/usr/share/nvidia/nvidia-application-profiles-rc", O_RDONLY) = -1 ENOENT (No such file or directory)
+getpid()                                = 1550757
+geteuid()                               = 1000
+socket(AF_UNIX, SOCK_SEQPACKET|SOCK_CLOEXEC, 0) = 8
+setsockopt(8, SOL_SOCKET, SO_PASSCRED, [1], 4) = 0
+connect(8, {sa_family=AF_UNIX, sun_path="/tmp/nvidia-mps/control"}, 26) = -1 ENOENT (No such file or directory)
+close(8)                                = 0
+readlink("/proc", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/proc/self", "1550757", 1023) = 7
+readlink("/proc/1550757", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/proc/1550757/exe", "/home/ubuntu/GPGPU/gpgpu-cuda/bu"..., 1023) = 42
+readlink("/home", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/home/ubuntu", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/home/ubuntu/GPGPU", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/home/ubuntu/GPGPU/gpgpu-cuda", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/home/ubuntu/GPGPU/gpgpu-cuda/build", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+readlink("/home/ubuntu/GPGPU/gpgpu-cuda/build/stream", 0x7ffe6d054b30, 1023) = -1 EINVAL (Invalid argument)
+mmap(NULL, 135168, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x756b0a6ab000
+access("/sys/module/nvidia/initstate", R_OK) = -1 ENOENT (No such file or directory)
+geteuid()                               = 1000
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054f00) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054ef0)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054d90) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054f00)  = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/modules", O_RDONLY) = 8
+fstat(8, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(8, "ip_vs_rr 12288 3 - Live 0x000000"..., 1024) = 1024
+read(8, "nf_nat 61440 3 xt_nat,xt_MASQUER"..., 1024) = 1024
+read(8, "000000000\nkvm_intel 483328 0 - L"..., 1024) = 1024
+read(8, "t_tcpudp,xt_conntrack,xt_MASQUER"..., 1024) = 1024
+read(8, "- Live 0x0000000000000000\npsmous"..., 1024) = 732
+read(8, "", 1024)                       = 0
+close(8)                                = 0
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055020) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054fc0)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054fd0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054fc0)  = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/modules", O_RDONLY) = 8
+fstat(8, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(8, "ip_vs_rr 12288 3 - Live 0x000000"..., 1024) = 1024
+read(8, "nf_nat 61440 3 xt_nat,xt_MASQUER"..., 1024) = 1024
+read(8, "000000000\nkvm_intel 483328 0 - L"..., 1024) = 1024
+read(8, "t_tcpudp,xt_conntrack,xt_MASQUER"..., 1024) = 1024
+read(8, "- Live 0x0000000000000000\npsmous"..., 1024) = 732
+read(8, "", 1024)                       = 0
+close(8)                                = 0
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055020) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054fc0)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054fd0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054fc0)  = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/modules", O_RDONLY) = 8
+fstat(8, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(8, "ip_vs_rr 12288 3 - Live 0x000000"..., 1024) = 1024
+read(8, "nf_nat 61440 3 xt_nat,xt_MASQUER"..., 1024) = 1024
+read(8, "000000000\nkvm_intel 483328 0 - L"..., 1024) = 1024
+read(8, "t_tcpudp,xt_conntrack,xt_MASQUER"..., 1024) = 1024
+read(8, "- Live 0x0000000000000000\npsmous"..., 1024) = 732
+read(8, "", 1024)                       = 0
+close(8)                                = 0
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055070) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d055010)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055020) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d055010)  = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/modules", O_RDONLY) = 8
+fstat(8, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(8, "ip_vs_rr 12288 3 - Live 0x000000"..., 1024) = 1024
+read(8, "nf_nat 61440 3 xt_nat,xt_MASQUER"..., 1024) = 1024
+read(8, "000000000\nkvm_intel 483328 0 - L"..., 1024) = 1024
+read(8, "t_tcpudp,xt_conntrack,xt_MASQUER"..., 1024) = 1024
+read(8, "- Live 0x0000000000000000\npsmous"..., 1024) = 732
+read(8, "", 1024)                       = 0
+close(8)                                = 0
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055070) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d055010)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d055020) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d055010)  = -1 ENOENT (No such file or directory)
+access("/sys/module/nvidia/initstate", R_OK) = -1 ENOENT (No such file or directory)
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ef0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ea0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/modules", O_RDONLY) = 8
+fstat(8, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+read(8, "ip_vs_rr 12288 3 - Live 0x000000"..., 1024) = 1024
+read(8, "nf_nat 61440 3 xt_nat,xt_MASQUER"..., 1024) = 1024
+read(8, "000000000\nkvm_intel 483328 0 - L"..., 1024) = 1024
+read(8, "t_tcpudp,xt_conntrack,xt_MASQUER"..., 1024) = 1024
+read(8, "- Live 0x0000000000000000\npsmous"..., 1024) = 732
+read(8, "", 1024)                       = 0
+close(8)                                = 0
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ef0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ea0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+access("/sys/module/nvidia/initstate", R_OK) = -1 ENOENT (No such file or directory)
+stat("/sys/bus/pci/devices", {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 8
+fstat(8, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+getdents64(8, 0x5600a59c0060 /* 12 entries */, 32768) = 368
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.2/config", O_RDONLY) = 9
+read(9, "\206\200 p\7\1\0\0\1\0\3\f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.0/config", O_RDONLY) = 9
+read(9, "\206\200\0p\3\1\0\2\0\0\1\6\0\0\200\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:04.0/config", O_RDONLY) = 9
+read(9, "\364\32\4\20\7\5\20\0\0\0\0\1\0\0\0\0A\300\0\0\0 \271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:00.0/config", O_RDONLY) = 9
+read(9, "\206\2007\22\3\1\0\0\2\0\0\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.3/config", O_RDONLY) = 9
+read(9, "\206\200\23q\3\1\200\2\3\0\200\6\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:03.0/config", O_RDONLY) = 9
+read(9, "\364\32\0\20\7\5\20\0\0\0\0\2\0\0\0\0\1\300\0\0\0\20\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:01.1/config", O_RDONLY) = 9
+read(9, "\206\200\20p\7\1\200\2\0\200\1\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:06.0/config", O_RDONLY) = 9
+read(9, "\364\32\2\20\7\1\20\0\0\0\377\0\0\0\0\0\301\300\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:02.0/config", O_RDONLY) = 9
+read(9, "\23\20\270\0\3\1\0\0\0\0\0\3\0\0\0\0\10\0\0\374\0\0\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+openat(AT_FDCWD, "/sys/bus/pci/devices/0000:00:05.0/config", O_RDONLY) = 9
+read(9, "\364\32\3\20\7\5\20\0\0\0\200\7\0\0\0\0\201\300\0\0\0000\271\376\0\0\0\0\0\0\0\0"..., 48) = 48
+close(9)                                = 0
+getdents64(8, 0x5600a59c0060 /* 0 entries */, 32768) = 0
+close(8)                                = 0
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ee0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e80)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054e90) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e80)  = -1 ENOENT (No such file or directory)
+access("/sys/module/nvidia/initstate", R_OK) = -1 ENOENT (No such file or directory)
+geteuid()                               = 1000
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ee0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e80)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054e90) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e80)  = -1 ENOENT (No such file or directory)
+access("/sys/module/nvidia/initstate", R_OK) = -1 ENOENT (No such file or directory)
+geteuid()                               = 1000
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ef0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+mknodat(AT_FDCWD, "/dev/nvidiactl", S_IFCHR|0666, makedev(0xc3, 0xff)) = -1 EACCES (Permission denied)
+stat("/usr/bin/nvidia-modprobe", 0x7ffe6d054ea0) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/proc/driver/nvidia/params", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat("/dev/nvidiactl", 0x7ffe6d054e90)  = -1 ENOENT (No such file or directory)
+ioctl(-1, _IOC(_IOC_READ|_IOC_WRITE, 0x46, 0x2a, 0x20), 0x7ffe6d0547f0) = -1 EBADF (Bad file descriptor)
+munmap(0x756b0a6ab000, 135168)          = 0
+futex(0x756b0a6a7178, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+write(2, "Using method: cpu\n", 18)     = 18
+fstat(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x1), ...}) = 0
+write(1, "Output: out.mp4\n", 16)       = 16
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoreelements.so", {st_mode=S_IFREG|0644, st_size=467640, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoreelements.so", {st_mode=S_IFREG|0644, st_size=467640, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoreelements.so", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=467640, ...}) = 0
+mmap(NULL, 466656, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b09b8e000
+mmap(0x756b09b99000, 327680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xb000) = 0x756b09b99000
+mmap(0x756b09be9000, 81920, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x5b000) = 0x756b09be9000
+mmap(0x756b09bfd000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x6f000) = 0x756b09bfd000
+close(8)                                = 0
+mprotect(0x756b09bfd000, 4096, PROT_READ) = 0
+rt_sigaction(SIGSEGV, {sa_handler=0x756b0aa82c50, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstplayback.so", {st_mode=S_IFREG|0644, st_size=668760, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstplayback.so", {st_mode=S_IFREG|0644, st_size=668760, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstplayback.so", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=668760, ...}) = 0
+mmap(NULL, 667272, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b09aeb000
+mmap(0x756b09af7000, 499712, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xc000) = 0x756b09af7000
+mmap(0x756b09b71000, 106496, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x86000) = 0x756b09b71000
+mmap(0x756b09b8b000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xa0000) = 0x756b09b8b000
+close(8)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 8
+fstat(8, {st_mode=S_IFREG|0644, st_size=71763, ...}) = 0
+mmap(NULL, 71763, PROT_READ, MAP_PRIVATE, 8, 0) = 0x756b0a6ba000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgstaudio-1.0.so.0", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=600824, ...}) = 0
+mmap(NULL, 604184, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b04d6b000
+mmap(0x756b04d7c000, 405504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x11000) = 0x756b04d7c000
+mmap(0x756b04ddf000, 110592, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x74000) = 0x756b04ddf000
+mmap(0x756b04dfa000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x8e000) = 0x756b04dfa000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgstpbutils-1.0.so.0", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=305648, ...}) = 0
+mmap(NULL, 303760, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b0a294000
+mmap(0x756b0a2a4000, 163840, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x10000) = 0x756b0a2a4000
+mmap(0x756b0a2cc000, 61440, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x38000) = 0x756b0a2cc000
+mmap(0x756b0a2db000, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x47000) = 0x756b0a2db000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgsttag-1.0.so.0", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=305632, ...}) = 0
+mmap(NULL, 303504, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b04d20000
+mmap(0x756b04d2a000, 188416, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xa000) = 0x756b04d2a000
+mmap(0x756b04d58000, 65536, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x38000) = 0x756b04d58000
+mmap(0x756b04d68000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x48000) = 0x756b04d68000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=121272, ...}) = 0
+mmap(NULL, 118936, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b09e35000
+mmap(0x756b09e38000, 77824, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x3000) = 0x756b09e38000
+mmap(0x756b09e4b000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x16000) = 0x756b09e4b000
+mmap(0x756b09e51000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x1c000) = 0x756b09e51000
+close(8)                                = 0
+mprotect(0x756b09e51000, 4096, PROT_READ) = 0
+mprotect(0x756b04d68000, 8192, PROT_READ) = 0
+mprotect(0x756b04dfa000, 16384, PROT_READ) = 0
+mprotect(0x756b0a2db000, 12288, PROT_READ) = 0
+mprotect(0x756b09b8b000, 8192, PROT_READ) = 0
+munmap(0x756b0a6ba000, 71763)           = 0
+rt_sigaction(SIGSEGV, {sa_handler=0x756b0aa82c50, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58af128, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5850da8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoconvertscale.so", {st_mode=S_IFREG|0644, st_size=59784, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoconvertscale.so", {st_mode=S_IFREG|0644, st_size=59784, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvideoconvertscale.so", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=59784, ...}) = 0
+mmap(NULL, 61640, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b0a6bc000
+mmap(0x756b0a6c0000, 28672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x4000) = 0x756b0a6c0000
+mmap(0x756b0a6c7000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xb000) = 0x756b0a6c7000
+mmap(0x756b0a6ca000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xd000) = 0x756b0a6ca000
+close(8)                                = 0
+mprotect(0x756b0a6ca000, 4096, PROT_READ) = 0
+rt_sigaction(SIGSEGV, {sa_handler=0x756b0aa82c50, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so", {st_mode=S_IFREG|0644, st_size=80280, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so", {st_mode=S_IFREG|0644, st_size=80280, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstx264.so", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=80280, ...}) = 0
+mmap(NULL, 82336, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b09e20000
+mmap(0x756b09e25000, 40960, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x5000) = 0x756b09e25000
+mmap(0x756b09e2f000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xf000) = 0x756b09e2f000
+mmap(0x756b09e33000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x12000) = 0x756b09e33000
+close(8)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 8
+fstat(8, {st_mode=S_IFREG|0644, st_size=71763, ...}) = 0
+mmap(NULL, 71763, PROT_READ, MAP_PRIVATE, 8, 0) = 0x756b0a6aa000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libx264.so.164", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=2313864, ...}) = 0
+mmap(NULL, 3331776, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b04800000
+mmap(0x756b04805000, 2052096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x5000) = 0x756b04805000
+mmap(0x756b049fa000, 229376, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x1fa000) = 0x756b049fa000
+mmap(0x756b04a32000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x232000) = 0x756b04a32000
+mmap(0x756b04a35000, 1017536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x756b04a35000
+close(8)                                = 0
+mprotect(0x756b04a32000, 8192, PROT_READ) = 0
+mprotect(0x756b09e33000, 4096, PROT_READ) = 0
+munmap(0x756b0a6aa000, 71763)           = 0
+rt_sigaction(SIGSEGV, {sa_handler=0x756b0aa82c50, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+brk(0x5600a5a12000)                     = 0x5600a5a12000
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstisomp4.so", {st_mode=S_IFREG|0644, st_size=676264, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstisomp4.so", {st_mode=S_IFREG|0644, st_size=676264, ...}, 0) = 0
+openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstisomp4.so", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=676264, ...}) = 0
+mmap(NULL, 678160, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b04c7a000
+mmap(0x756b04c88000, 495616, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xe000) = 0x756b04c88000
+mmap(0x756b04d01000, 106496, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x87000) = 0x756b04d01000
+mmap(0x756b04d1b000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xa0000) = 0x756b04d1b000
+close(8)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 8
+fstat(8, {st_mode=S_IFREG|0644, st_size=71763, ...}) = 0
+mmap(NULL, 71763, PROT_READ, MAP_PRIVATE, 8, 0) = 0x756b0a6aa000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgstriff-1.0.so.0", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=63792, ...}) = 0
+mmap(NULL, 65616, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b09ada000
+mmap(0x756b09adc000, 40960, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x2000) = 0x756b09adc000
+mmap(0x756b09ae6000, 12288, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xc000) = 0x756b09ae6000
+mmap(0x756b09ae9000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xe000) = 0x756b09ae9000
+close(8)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgstrtp-1.0.so.0", O_RDONLY|O_CLOEXEC) = 8
+read(8, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+fstat(8, {st_mode=S_IFREG|0644, st_size=199056, ...}) = 0
+mmap(NULL, 201088, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 8, 0) = 0x756b04c48000
+mmap(0x756b04c54000, 94208, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0xc000) = 0x756b04c54000
+mmap(0x756b04c6b000, 40960, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x23000) = 0x756b04c6b000
+mmap(0x756b04c75000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 8, 0x2c000) = 0x756b04c75000
+close(8)                                = 0
+mprotect(0x756b04c75000, 16384, PROT_READ) = 0
+mprotect(0x756b09ae9000, 4096, PROT_READ) = 0
+mprotect(0x756b04d1b000, 16384, PROT_READ) = 0
+munmap(0x756b0a6aa000, 71763)           = 0
+rt_sigaction(SIGSEGV, {sa_handler=0x756b0aa82c50, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x756b09c458d0}, NULL, 8) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "/dev/urandom", O_RDONLY|O_CLOEXEC) = 8
+read(8, "fBk\201\367\30\3155\31ql\371\371W\26K", 16) = 16
+close(8)                                = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+socketpair(AF_UNIX, SOCK_STREAM, 0, [8, 9]) = 0
+socketpair(AF_UNIX, SOCK_STREAM, 0, [10, 11]) = 0
+brk(0x5600a5a33000)                     = 0x5600a5a33000
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+close(11)                               = 0
+close(10)                               = 0
+newfstatat(AT_FDCWD, ".", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/home/ubuntu/GPGPU", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+newfstatat(AT_FDCWD, ".", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+newfstatat(AT_FDCWD, "/home/ubuntu/GPGPU", {st_mode=S_IFDIR|0775, st_size=4096, ...}, 0) = 0
+futex(0x5600a58f9e60, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a07c30, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "out.mp4", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10
+fcntl(10, F_GETFL)                      = 0x8001 (flags O_WRONLY|O_LARGEFILE)
+fstat(10, {st_mode=S_IFREG|0664, st_size=0, ...}) = 0
+lseek(10, 0, SEEK_SET)                  = 0
+write(9, "W", 1)                        = 1
+futex(0x5600a5a07c30, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a05090, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a05090, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f41a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f41a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ed7d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ed7d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ecd90, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ecd90, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59e62e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59e62e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58522e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58ac5a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58ac5a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58522e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a590a6c0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a590a6c0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a07c30, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a07f28, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a05090, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x756b0a96c280, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+getpid()                                = 1550757
+gettid()                                = 1550757
+mmap(NULL, 8392704, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x756aff7ff000
+mprotect(0x756aff800000, 8388608, PROT_READ|PROT_WRITE) = 0
+rt_sigprocmask(SIG_BLOCK, ~[], [], 8)   = 0
+clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x756afffff2d0, parent_tid=0x756afffff2d0, exit_signal=0, stack=0x756aff7ff000, stack_size=0x7fd940, tls=0x756afffff000} => {parent_tid=[1550759]}, 88) = 1550759
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+futex(0x5600a5a17ef0, FUTEX_WAKE_PRIVATE, 1) = 1
+futex(0x5600a5a17ee0, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x756b0a96bf68, FUTEX_WAIT_PRIVATE, 0, NULL) = 0
+futex(0x5600a5a055d8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a14240, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a14288, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a142b8, FUTEX_WAKE_PRIVATE, 1) = 1
+futex(0x5600a5a05090, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f41a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f4c58, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f4968, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59f41a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c7a8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c448, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0c220, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ed7d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59edfd8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59edb78, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ed7d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ecd90, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ed0f8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59eaea8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ecd90, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0ba08, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a0b6a8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57ddc40, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59e62e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59ea8b8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a57d5978, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a59e62e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58522e0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58ac5a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58963e8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "./gpgpu-cuda/samples/ACET.mp4", O_RDONLY) = 11
+fstat(11, {st_mode=S_IFREG|0664, st_size=1391907, ...}) = 0
+lseek(11, 0, SEEK_END)                  = 1391907
+lseek(11, 0, SEEK_SET)                  = 0
+fstat(11, {st_mode=S_IFREG|0664, st_size=1391907, ...}) = 0
+futex(0x5600a590a770, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x5600a590a770, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x5600a590a638, FUTEX_WAKE_PRIVATE, 1) = 0
+close(11)                               = 0
+futex(0x5600a590a638, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x756b0a96c018, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58af1d0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5850e50, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5850da8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58af128, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+openat(AT_FDCWD, "./gpgpu-cuda/samples/ACET.mp4", O_RDONLY) = 11
+fstat(11, {st_mode=S_IFREG|0664, st_size=1391907, ...}) = 0
+lseek(11, 0, SEEK_END)                  = 1391907
+lseek(11, 0, SEEK_SET)                  = 0
+fstat(11, {st_mode=S_IFREG|0664, st_size=1391907, ...}) = 0
+futex(0x5600a590a638, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x5600a5850058, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5850da8, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58af128, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a58ae568, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a5a17ef0, FUTEX_WAKE_PRIVATE, 1) = 1
+futex(0x5600a5a17ee0, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0x756b0a96bf68, FUTEX_WAIT_PRIVATE, 1, NULL) = 0
+futex(0x5600a58ac5a0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a590a6c0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+futex(0x5600a590a6c0, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+futex(0x5600a58847f0, FUTEX_WAKE_PRIVATE, 1) = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+futex(0x756ae8000030, FUTEX_WAIT_PRIVATE, 2, NULL) = 0
+futex(0x756ae8000030, FUTEX_WAKE_PRIVATE, 1) = 0
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+futex(0x5600a58847f0, FUTEX_WAKE_PRIVATE, 1) = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+futex(0x756aec000030, FUTEX_WAIT_PRIVATE, 2, NULL) = 0
+futex(0x756aec000030, FUTEX_WAIT_PRIVATE, 2, NULL) = 0
+futex(0x756aec000030, FUTEX_WAIT_PRIVATE, 2, NULL) = 0
+futex(0x756aec000030, FUTEX_WAKE_PRIVATE, 1) = 0
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+futex(0x5600a58847f0, FUTEX_WAKE_PRIVATE, 1) = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+futex(0x756aec000030, FUTEX_WAIT_PRIVATE, 2, NULL) = 0
+futex(0x756aec000030, FUTEX_WAKE_PRIVATE, 1) = 0
+read(8, "W", 1)                         = 1
+futex(0x5600a58847f0, FUTEX_WAKE_PRIVATE, 1) = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = 1 ([{fd=8, revents=POLLIN}])
+read(8, "W", 1)                         = 1
+ppoll([{fd=8, events=POLLIN|POLLERR|POLLHUP|POLLNVAL}], 1, NULL, NULL, 8) = ? ERESTARTNOHAND (To be restarted if no handler)
+--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
++++ killed by SIGINT +++
