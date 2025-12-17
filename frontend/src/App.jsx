@@ -22,7 +22,8 @@ const buildBackendUrl = (pathname) =>
   backendBaseUrl ? new URL(pathname, backendBaseUrl).href : pathname;
 
 const LIVE_CAPTURE_INTERVAL_MS = 250;
-const LIVE_SKIP_BETWEEN_PAIRS = 1;
+// Send 1 frame out of 6 to lighten the pipeline (applies to CPU & GPU modes).
+const LIVE_SKIP_BETWEEN_PAIRS = 5;
 
 const buildBackendWebSocketUrl = (pathname) => {
   const base =
