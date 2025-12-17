@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "frontend": "npm run dev --prefix frontend",
+    "frontend": "npm run dev --prefix frontend --host 0.0.0.0",
     "frontend-build": "npm run build --prefix frontend",
     "api": "cd backend && uv run python -m uvicorn api:app --reload --host 0.0.0.0 --port 8000",
     "dev": "concurrently --names \"api,frontend\" --prefix-colors \"cyan,magenta\" \"npm run api\" \"npm run frontend\""
